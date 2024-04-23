@@ -21,17 +21,20 @@ class Window(QDialog, ui.Ui_Dialog):
         # database
         self.con = sqlite3.connect('database.db')
         self.cursorObj = self.con.cursor()
-        self.cursorObj.execute('create table if not exists user(name , ID, offeringID UNIQUE, phone, address)')
-        self.cursorObj.execute('create table if not exists offering(offeringID, date, category, amount, note, receipt, payment_type) ')        
+        self.cursorObj.execute('create table if not exists user(id INTEGER PRIMARY KEY, name UNIQUE, ID_card, offeringID UNIQUE, phone, address)')
+        self.cursorObj.execute('create table if not exists offering(id INTEGER PRIMARY KEY, offeringID, date, category, amount, note, receipt, payment_type) ')        
         self.con.commit() 
         
         cursor = self.cursorObj.execute("SELECT * from offering").fetchall()
         print(cursor)
         cursor = self.cursorObj.execute("SELECT * from user").fetchall()
         print(cursor)
+        # status clear
+        self.status_clear.clicked.connect(self.status_clear_onchange)
 
         # ADD user
-        # self.ADD_user_name
+        # self.ADD_user_wrap
+        self.ADD_user_name.textChanged.connect(self.ADD_user_name_onchange)
         # self.ADD_user_ID
         self.ADD_user_offeringID.textChanged.connect(self.ADD_user_offeringID_onchange)
         # self.ADD_user_phone
@@ -39,35 +42,71 @@ class Window(QDialog, ui.Ui_Dialog):
         self.ADD_user_pushButton.clicked.connect(self.ADD_user_pushButton_onchange)
 
         # ADD offering
+        # self.ADD_offering_wrap
         self.ADD_offering_offeringID = ""
         self.ADD_offering_name = ""
         self.ADD_offering_person.textChanged.connect(self.ADD_offering_person_onchange)
+        self.ADD_offering_pushButton.clicked.connect(self.ADD_offering_pushButton_onchange)
+
+        self.ADD_offering_person.setText("")
         self.ADD_offering_date.setDate(QtCore.QDate().currentDate())
-
-
-        # self.ADD_offering_paytype
-        # self.ADD_offering_note
-        # self.ADD_offering_category
-        # self.ADD_offering_receipt
-        # self.ADD_offering_pushButton.clicked.connect(self.ADD_offering_pushButton_onchange)
-
-
-
+        self.ADD_offering_amount.setText("")
+        self.ADD_offering_paytype.setCurrentIndex(0)
+        self.ADD_offering_note.setText("")
+        self.ADD_offering_category.setCurrentIndex(0)
+        self.ADD_offering_receipt.setChecked(False)
 
         # Search
         self.Search_date_from.setDate(QtCore.QDate().currentDate())
         self.Search_date_end.setDate(QtCore.QDate().currentDate())
 
         # Weekly report 
+        # self.WeeklyReport_wrap
         self.WeeklyReport_date.setDate(QtCore.QDate().currentDate())
+        # WeeklyReport_tenth_ID_show
+        # WeeklyReport_tenth_amount_show
+        # WeeklyReport_sonday_ID_show
+
+        # WeeklyReport_firstfruit_ID_show
+
+        # WeeklyReport_thanks_ID_show
+
+        # WeeklyReport_special_ID_show
+
+        # WeeklyReport_repair_ID_show
+
+        # WeeklyReport_specific_ID_show
+
+        # WeeklyReport_others_ID_show
 
         # Analysis Search
+        # self.Analysis_Search_wrap
         self.Analysis_Search_date_from.setDate(QtCore.QDate().currentDate())
         self.Analysis_Search_date_to.setDate(QtCore.QDate().currentDate())
 
         # self.user_list.addItem(row[0])
 
-    '''ADD USER'''
+    def status_clear_onchange(self):
+        self.status_note.setText("")
+
+    '''
+    ADD USER
+
+    ADD_user_name_onchange: name is UNIQUE
+    ADD_user_offeringID_onchange: offeringID is UNIQUE
+    ADD_user_pushButton_onchange: Add user to database - user table, and clear the blanks
+    '''
+    def ADD_user_name_onchange(self):
+        self.con = sqlite3.connect('database.db')
+        self.cursorObj = self.con.cursor()
+        try:
+            cursor = self.cursorObj.execute("SELECT * from user WHERE name = '%s'" %(self.ADD_user_name.text()))
+            res = [item for item in cursor]
+            if len(res)>0:
+                self.status_note.append(f"Fail, name {self.ADD_user_name.text()} already exists in the user table. Person {res} is in the table.")        
+        except:
+            pass
+
     def ADD_user_offeringID_onchange(self):
         self.con = sqlite3.connect('database.db')
         self.cursorObj = self.con.cursor()
@@ -83,13 +122,13 @@ class Window(QDialog, ui.Ui_Dialog):
         self.con = sqlite3.connect('database.db')
         self.cursorObj = self.con.cursor()
         try:
-            cursor = self.cursorObj.execute("insert or ignore into user(name , ID, offeringID, phone, address) VALUES (?,?,?,?,?)" , (str(self.ADD_user_name.text()), str(self.ADD_user_ID.text()), str(self.ADD_user_offeringID.text()), str(self.ADD_user_phone.text()), str(self.ADD_user_address.text())))
-        
-            cursor = self.cursorObj.execute("SELECT * from user WHERE offeringID = '%s'" %(self.ADD_user_offeringID.text()))
-            self.status_note.append(f"Success, append {str([item for item in cursor])} to the user table")
+            cursor = self.cursorObj.execute("insert or ignore into user(name , ID_card, offeringID, phone, address) VALUES (?,?,?,?,?)" , \
+                                            (str(self.ADD_user_name.text()), str(self.ADD_user_ID.text()), str(self.ADD_user_offeringID.text()), str(self.ADD_user_phone.text()), str(self.ADD_user_address.text())))
+            cursor = self.cursorObj.execute("SELECT * FROM user ORDER BY id DESC LIMIT 1")
+            self.status_note.append(f"Success, add {[item for item in cursor]} to the user table")
             self.con.commit()
         except:
-            self.status_note.append(f"fail to append user, error message: {logging.CRITICAL}")
+            self.status_note.append(f"fail to add user, error message: {logging.CRITICAL}")
             pass
         
         self.ADD_user_name.setText("")
@@ -98,7 +137,12 @@ class Window(QDialog, ui.Ui_Dialog):
         self.ADD_user_phone.setText("")
         self.ADD_user_address.setText("")
 
-    '''ADD OFFERING'''
+    '''
+    ADD OFFERING
+
+    ADD_offering_person_onchange: find the right person
+    ADD_offering_pushButton_onchange: add offering to database - offering, and clear the blanks
+    '''
     def ADD_offering_person_onchange(self):
         # self.update_database()
         self.con = sqlite3.connect('database.db')
@@ -116,14 +160,32 @@ class Window(QDialog, ui.Ui_Dialog):
             self.con.commit()
         except:
             pass
-          
     
-    # def ADD_offering_pushButton_onchange(self):
-    #     self.con = sqlite3.connect('database.db')
-    #     self.cursorObj = self.con.cursor()
+    def ADD_offering_pushButton_onchange(self):
+        self.con = sqlite3.connect('database.db')
+        self.cursorObj = self.con.cursor()
+        # maybe use 0/1
+        want_receipt = "Yes" if self.ADD_offering_receipt.isChecked() else "No"
+        try:
+            cursor = self.cursorObj.execute("insert into offering(offeringID , date, category, amount, note, receipt, payment_type) VALUES (?,?,?,?,?,?,?)",\
+                                            (str(self.ADD_offering_offeringID), datetime.strptime(self.ADD_offering_date.date().toString("yyyy-MM-dd"), '%Y-%m-%d').date(),str(self.ADD_offering_category.currentText()), str(self.ADD_offering_amount.text()),str(self.ADD_offering_note.toPlainText()), want_receipt, str(self.ADD_offering_paytype.currentText())))
+            
+            cursor = self.cursorObj.execute("SELECT * FROM offering ORDER BY id DESC LIMIT 1")
+            self.status_note.append(f"Success, add {[row for row in cursor]}")
+            self.con.commit()
+            
+        except:
+            pass
 
-    #     cursor = self.cursorObj.execute("insert or ignore into offering(offeringID , date, category, amount, note, receipt, payment_type) VALUES (?,?,?,?,?,?,?)" ,('E00','2024-04-21','什一奉獻',1000,"",0, "cash"))
-
+        self.ADD_offering_offeringID = ""
+        self.ADD_offering_name = ""
+        self.ADD_offering_person.setText("")
+        self.ADD_offering_date.setDate(QtCore.QDate().currentDate())
+        self.ADD_offering_amount.setText("")
+        self.ADD_offering_paytype.setCurrentIndex(0)
+        self.ADD_offering_note.setText("")
+        self.ADD_offering_category.setCurrentIndex(0)
+        self.ADD_offering_receipt.setChecked(False)
 
 
     # def update_database(self):
