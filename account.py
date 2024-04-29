@@ -1,7 +1,6 @@
-from PyQt5.QtWidgets import QDialog
-from PyQt5 import QtCore 
+from PyQt5 import QtWidgets, QtCore, QtGui 
 from PyQt5.QtGui import QImage,QPixmap
-from PyQt5.QtWidgets import (QApplication, QTableWidgetItem, QMainWindow, QMessageBox, )
+from PyQt5.QtWidgets import (QDialog, QApplication, QTableWidgetItem, QMainWindow, QMessageBox, )
 import sqlite3
 import numpy as np
 import logging
@@ -19,7 +18,6 @@ import dialog_ui as ui
 class Window(QDialog, ui.Ui_Dialog):
     def __init__(self):
         super().__init__()
-        # QtWidgets
         self.setupUi(self)
 
         # database
@@ -75,17 +73,13 @@ class Window(QDialog, ui.Ui_Dialog):
         self.Search_pushButton.clicked.connect(lambda: self.Search_pushButton_onchange(self.Search_offeringID, \
                                                                                        self.Search_table_type, \
                                                                                         "", \
-                                                                                       str(datetime.strptime(self.Search_date_from.date().toString("yyyy-MM-dd"), '%Y-%m-%d').date()), \
-                                                                                       str(datetime.strptime(self.Search_date_end.date().toString("yyyy-MM-dd"), '%Y-%m-%d').date()) ))
+                                                                                       datetime.strptime(self.Search_date_from.date().toString("yyyy-MM-dd"), '%Y-%m-%d').date(), \
+                                                                                       datetime.strptime(self.Search_date_end.date().toString("yyyy-MM-dd"), '%Y-%m-%d').date() ))
         
-        self.Search_table.cellChanged.connect(lambda row, col: self.Search_table_onchange(row, col))
-
-
-        # self.Search_table
-        
-
-
-
+        self.Search_table.cellChanged.connect(lambda row, col: self.Search_table_update_onchange(row, col))
+        # self.Search_table.verticalHeader().sectionClicked.connect(lambda item: self.Search_table_delete_onchange(item))
+        self.Search_table_delete_row.clicked.connect(self.Search_table_delete_onchange)
+        self.Search_date_all.setChecked(False)
 
         # Weekly report 
         # self.WeeklyReport_wrap
@@ -108,10 +102,10 @@ class Window(QDialog, ui.Ui_Dialog):
 
         # Analysis Search
         # self.Analysis_Search_wrap
+        # Analysis_Search_ID_Name
+        # Analysis_Search_pushButton
         self.Analysis_Search_date_from.setDate(QtCore.QDate().currentDate())
         self.Analysis_Search_date_to.setDate(QtCore.QDate().currentDate())
-
-        # self.user_list.addItem(row[0])
 
     def status_clear_onchange(self):
         self.status_note.setText("")
@@ -185,7 +179,6 @@ class Window(QDialog, ui.Ui_Dialog):
             cursor = self.cursorObj.execute(f"SELECT name, offeringID FROM user WHERE offeringID = '%s' OR name = '%s'" %(str(self.ADD_offering_person.text()), str(self.ADD_offering_person.text())))
             res = [item for item in cursor]
             if len(res) > 0:
-                # res =  np.char.split(np.char.strip(str(res), chars = "[]()"), ',') 
                 self.ADD_offering_name = res[0][0]
                 self.ADD_offering_offeringID = res[0][1]
                 self.ADD_offering_person_show.setText(f"name: {self.ADD_offering_name}, offeringID: {self.ADD_offering_offeringID}")
@@ -203,12 +196,18 @@ class Window(QDialog, ui.Ui_Dialog):
             want_receipt = "Yes" if self.ADD_offering_receipt.isChecked() else "No"
             try:
                 cursor = self.cursorObj.execute("insert into offering(offeringID , date, category, amount, note, receipt, payment_type) VALUES (?,?,?,?,?,?,?)",\
-                                                (str(self.ADD_offering_offeringID), str(datetime.strptime(self.ADD_offering_date.date().toString("yyyy-MM-dd"), '%Y-%m-%d').date()),str(self.ADD_offering_category.currentText()), str(self.ADD_offering_amount.text()),str(self.ADD_offering_note.toPlainText()), want_receipt, str(self.ADD_offering_paytype.currentText())))
+                                                (str(self.ADD_offering_offeringID), datetime.strptime(self.ADD_offering_date.date().toString("yyyy-MM-dd"), '%Y-%m-%d').date(),str(self.ADD_offering_category.currentText()), str(self.ADD_offering_amount.text()),str(self.ADD_offering_note.toPlainText()), want_receipt, str(self.ADD_offering_paytype.currentText())))
                 self.con.commit()
 
                 cursor = self.cursorObj.execute("SELECT * FROM offering ORDER BY id DESC LIMIT 1")
                 self.status_note.append(f"Success, 新增 {[row for row in cursor]}")
                 self.con.commit()
+
+                self.Search_pushButton_onchange("", \
+                                                "offering", \
+                                                "", \
+                                                "", \
+                                                "")
                 
             except:
                 pass
@@ -226,10 +225,17 @@ class Window(QDialog, ui.Ui_Dialog):
         self.ADD_offering_receipt.setChecked(False)
 
     '''
-    Search
+    Search and Update
+    
+    ID_Name_onchange
+    Search_ID_Name_list_onchange
+    Search_field_onchange
+    Search_sql
+    Search_pushButton_onchange
+    Search_table_update_onchange: warning: date update!
+    Search_table_delete_onchange
     '''
     def ID_Name_onchange(self, name, id):
-        # self.update_database()
         if name and id:
             try:
                 self.con = sqlite3.connect('database.db')
@@ -258,17 +264,23 @@ class Window(QDialog, ui.Ui_Dialog):
             self.Search_table_type = "user"
 
     def Search_sql(self, person = "", field = "offering", offering_category = "", date_from = "", date_end = ""):
+
         sql = f"select * from {field}"
         filter = []
         if person: filter.append(f"(offeringID = '{str(person)}')")
         if field == "offering":
             if offering_category: filter.append(f"(category = '{str(offering_category)}' OR note LIKE '%{str(offering_category)}%')")
-            if date_from and date_end: filter.append(f"(date between '{str(date_from)}' AND '{str(date_end)}')")
+            
+            if not self.Search_date_all.isChecked():
+                if date_from and date_end: filter.append(f"(date between '{datetime.strptime(str(date_from), '%Y-%m-%d').date()}' \
+                                                            AND '{datetime.strptime(str(date_end), '%Y-%m-%d').date()}')")
 
         if filter:
             sql += " WHERE" + " AND ".join(filter)
-        # print(sql)
+
         return sql
+    
+
 
     def Search_pushButton_onchange(self, person = "", field = "offering", offering_category = "", date_from = "", date_end = ""):
         
@@ -290,22 +302,25 @@ class Window(QDialog, ui.Ui_Dialog):
             self.Search_table.setHorizontalHeaderLabels(('unique key', '奉獻編號', '日期', '奉獻項目', '金額', '備註', '收據', '奉獻方式'))
 
         for row_number, row_data in enumerate(cursor):
-                self.Search_table.insertRow(row_number)
-                for column_number, data in enumerate(row_data):
-                    if data == None:
-                        data = ""
-                        self.Search_table.setItem(row_number,
-                        column_number, QTableWidgetItem(str(data)))
-                    else:
-                        item = QTableWidgetItem(str(data))
-                        # https://blog.csdn.net/qq_41539778/article/details/119205439
-                        item.setFlags(QtCore.Qt.ItemFlags(int("111111", 2))) # item.flags() ^ QtCore.Qt.ItemIsEditable
-                        self.Search_table.setItem(row_number, column_number, item)
+            self.Search_table.insertRow(row_number)
+            for column_number, data in enumerate(row_data):
+                if data == None:
+                    data = ""
+                    self.Search_table.setItem(row_number,
+                    column_number, QTableWidgetItem(str(data)))
+                else:
+                    item = QTableWidgetItem(str(data))
+                    # https://blog.csdn.net/qq_41539778/article/details/119205439
+                    item.setFlags(QtCore.Qt.ItemFlags(int("111111", 2))) # item.flags() ^ QtCore.Qt.ItemIsEditable
+                    self.Search_table.setItem(row_number, column_number, item)
+                   
+            # deleteButton = QtWidgets.QPushButton("刪除")
+            # deleteButton.setDown(False) 
+            # self.Search_table.setCellWidget(row_number, len(cursor[0]), deleteButton)
     
-    def Search_table_onchange(self, row, col):
+    def Search_table_update_onchange(self, row, col):
         # https://zhuanlan.zhihu.com/p/58619107
         if self.Search_table.currentItem():
-            # print(self.Search_table.currentItem().text(), self.Search_table.item(row,0).text())
 
             self.con = sqlite3.connect('database.db')
             self.cursorObj = self.con.cursor()
@@ -314,6 +329,36 @@ class Window(QDialog, ui.Ui_Dialog):
             self.con.commit()
             cursor = self.cursorObj.execute(f"UPDATE {self.Search_table_type} SET {header[col]} = '{self.Search_table.currentItem().text()}' WHERE id = '{self.Search_table.item(row,0).text()}'").fetchall()
             self.con.commit()
+    
+    def Search_table_delete_onchange(self):
+        cur_row = self.Search_table.currentRow()
+        # if row is selected
+        if cur_row != -1:
+            # reply = QMessageBox.question(self, 'warning', '確認刪除此筆資料?(刪除不可復原)',
+            #     QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+            reply = QMessageBox(self)
+            reply.setStyleSheet("QLabel{""min-width: 400px;""min-height: 120px;" "font-size: 20px" "}")
+            reply.setText('確認刪除此筆資料? (刪除不可復原)')
+            y = reply.addButton('yes',3)   
+            n = reply.addButton('no',3)  
+    
+            reply.setDefaultButton(n)       
+            res = reply.exec()
+
+            # if reply == QMessageBox.Yes:
+            if not res:
+                self.con = sqlite3.connect('database.db')
+                self.cursorObj = self.con.cursor()
+                cursor = self.cursorObj.execute(f"DELETE FROM {self.Search_table_type} WHERE id = '{self.Search_table.item(cur_row,0).text()}'")
+                self.con.commit()
+
+                self.Search_pushButton_onchange(self.Search_offeringID, \
+                                                self.Search_table_type, \
+                                                "", \
+                                                datetime.strptime(self.Search_date_from.date().toString("yyyy-MM-dd"), '%Y-%m-%d').date(), \
+                                                datetime.strptime(self.Search_date_end.date().toString("yyyy-MM-dd"), '%Y-%m-%d').date() )
+        else:
+            pass
             
 # np.char.split(np.char.strip(str(res), chars = "[]()"), ',') 
 
@@ -330,5 +375,10 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     MainWindow = QMainWindow()
     window = Window()
+
+    # paths = ['database.db']
+    # fs_watcher = QtCore.QFileSystemWatcher(paths)
+    # fs_watcher.fileChanged.connect(window.file_changed)
+
     window.show()
     sys.exit(app.exec_())
