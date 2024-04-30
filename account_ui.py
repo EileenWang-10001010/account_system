@@ -250,7 +250,7 @@ class Ui_Dialog(object):
         self.scrollAreaWidgetContents_3.setGeometry(QtCore.QRect(0, 0, 2172, 1239))
         self.scrollAreaWidgetContents_3.setObjectName("scrollAreaWidgetContents_3")
         self.verticalLayoutWidget_4 = QtWidgets.QWidget(self.scrollAreaWidgetContents_3)
-        self.verticalLayoutWidget_4.setGeometry(QtCore.QRect(10, 70, 671, 745))
+        self.verticalLayoutWidget_4.setGeometry(QtCore.QRect(20, 20, 671, 1161))
         self.verticalLayoutWidget_4.setObjectName("verticalLayoutWidget_4")
         self.WeeklyReport_wrap = QtWidgets.QVBoxLayout(self.verticalLayoutWidget_4)
         self.WeeklyReport_wrap.setSizeConstraint(QtWidgets.QLayout.SetNoConstraint)
@@ -261,93 +261,120 @@ class Ui_Dialog(object):
         self.WeeklyReport_wrap.addWidget(self.label_20)
         self.gridLayout_3 = QtWidgets.QGridLayout()
         self.gridLayout_3.setObjectName("gridLayout_3")
-        self.WeeklyReport_special_amount_show = QtWidgets.QTextEdit(self.verticalLayoutWidget_4)
-        self.WeeklyReport_special_amount_show.setObjectName("WeeklyReport_special_amount_show")
-        self.gridLayout_3.addWidget(self.WeeklyReport_special_amount_show, 6, 4, 1, 1)
-        self.label_32 = QtWidgets.QLabel(self.verticalLayoutWidget_4)
-        self.label_32.setObjectName("label_32")
-        self.gridLayout_3.addWidget(self.label_32, 5, 2, 1, 1)
-        self.label_41 = QtWidgets.QLabel(self.verticalLayoutWidget_4)
-        self.label_41.setObjectName("label_41")
-        self.gridLayout_3.addWidget(self.label_41, 8, 2, 1, 1)
-        self.WeeklyReport_thanks_ID_show = QtWidgets.QTextEdit(self.verticalLayoutWidget_4)
-        self.WeeklyReport_thanks_ID_show.setObjectName("WeeklyReport_thanks_ID_show")
-        self.gridLayout_3.addWidget(self.WeeklyReport_thanks_ID_show, 5, 3, 1, 1)
-        self.WeeklyReport_firstfruit_ID_show = QtWidgets.QTextEdit(self.verticalLayoutWidget_4)
-        self.WeeklyReport_firstfruit_ID_show.setObjectName("WeeklyReport_firstfruit_ID_show")
-        self.gridLayout_3.addWidget(self.WeeklyReport_firstfruit_ID_show, 4, 3, 1, 1)
-        self.label_42 = QtWidgets.QLabel(self.verticalLayoutWidget_4)
-        self.label_42.setObjectName("label_42")
-        self.gridLayout_3.addWidget(self.label_42, 9, 2, 1, 1)
-        self.WeeklyReport_tenth_amount_show = QtWidgets.QTextBrowser(self.verticalLayoutWidget_4)
-        self.WeeklyReport_tenth_amount_show.setObjectName("WeeklyReport_tenth_amount_show")
-        self.gridLayout_3.addWidget(self.WeeklyReport_tenth_amount_show, 2, 4, 1, 1)
+        self.label_44 = QtWidgets.QLabel(self.verticalLayoutWidget_4)
+        self.label_44.setObjectName("label_44")
+        self.gridLayout_3.addWidget(self.label_44, 10, 2, 1, 1)
+        self.WeeklyReport_date_end = QtWidgets.QDateEdit(self.verticalLayoutWidget_4)
+        self.WeeklyReport_date_end.setObjectName("WeeklyReport_date_end")
+        self.gridLayout_3.addWidget(self.WeeklyReport_date_end, 0, 4, 1, 1)
         self.label_26 = QtWidgets.QLabel(self.verticalLayoutWidget_4)
         self.label_26.setObjectName("label_26")
         self.gridLayout_3.addWidget(self.label_26, 2, 2, 1, 1)
-        self.label_25 = QtWidgets.QLabel(self.verticalLayoutWidget_4)
-        self.label_25.setObjectName("label_25")
-        self.gridLayout_3.addWidget(self.label_25, 3, 2, 1, 1)
-        self.label_29 = QtWidgets.QLabel(self.verticalLayoutWidget_4)
-        self.label_29.setObjectName("label_29")
-        self.gridLayout_3.addWidget(self.label_29, 4, 2, 1, 1)
-        self.WeeklyReport_firstfruit_amount_show = QtWidgets.QTextEdit(self.verticalLayoutWidget_4)
-        self.WeeklyReport_firstfruit_amount_show.setObjectName("WeeklyReport_firstfruit_amount_show")
-        self.gridLayout_3.addWidget(self.WeeklyReport_firstfruit_amount_show, 4, 4, 1, 1)
+        self.label_45 = QtWidgets.QLabel(self.verticalLayoutWidget_4)
+        self.label_45.setObjectName("label_45")
+        self.gridLayout_3.addWidget(self.label_45, 11, 2, 1, 1)
+        self.label_32 = QtWidgets.QLabel(self.verticalLayoutWidget_4)
+        self.label_32.setObjectName("label_32")
+        self.gridLayout_3.addWidget(self.label_32, 5, 2, 1, 1)
         self.label_28 = QtWidgets.QLabel(self.verticalLayoutWidget_4)
         self.label_28.setObjectName("label_28")
         self.gridLayout_3.addWidget(self.label_28, 1, 4, 1, 1)
-        self.WeeklyReport_date = QtWidgets.QDateEdit(self.verticalLayoutWidget_4)
-        self.WeeklyReport_date.setObjectName("WeeklyReport_date")
-        self.gridLayout_3.addWidget(self.WeeklyReport_date, 0, 3, 1, 1)
-        self.WeeklyReport_tenth_ID_show = QtWidgets.QTextBrowser(self.verticalLayoutWidget_4)
-        self.WeeklyReport_tenth_ID_show.setObjectName("WeeklyReport_tenth_ID_show")
-        self.gridLayout_3.addWidget(self.WeeklyReport_tenth_ID_show, 2, 3, 1, 1)
-        self.label_34 = QtWidgets.QLabel(self.verticalLayoutWidget_4)
-        self.label_34.setObjectName("label_34")
-        self.gridLayout_3.addWidget(self.label_34, 0, 2, 1, 1)
-        self.WeeklyReport_sonday_ID_show = QtWidgets.QTextEdit(self.verticalLayoutWidget_4)
-        self.WeeklyReport_sonday_ID_show.setObjectName("WeeklyReport_sonday_ID_show")
-        self.gridLayout_3.addWidget(self.WeeklyReport_sonday_ID_show, 3, 3, 1, 1)
-        self.label_23 = QtWidgets.QLabel(self.verticalLayoutWidget_4)
-        self.label_23.setObjectName("label_23")
-        self.gridLayout_3.addWidget(self.label_23, 1, 3, 1, 1)
-        self.WeeklyReport_thanks_amount_show = QtWidgets.QTextEdit(self.verticalLayoutWidget_4)
-        self.WeeklyReport_thanks_amount_show.setObjectName("WeeklyReport_thanks_amount_show")
-        self.gridLayout_3.addWidget(self.WeeklyReport_thanks_amount_show, 5, 4, 1, 1)
-        self.WeeklyReport_sonday_amount_show = QtWidgets.QTextBrowser(self.verticalLayoutWidget_4)
-        self.WeeklyReport_sonday_amount_show.setObjectName("WeeklyReport_sonday_amount_show")
-        self.gridLayout_3.addWidget(self.WeeklyReport_sonday_amount_show, 3, 4, 1, 1)
-        self.label_40 = QtWidgets.QLabel(self.verticalLayoutWidget_4)
-        self.label_40.setObjectName("label_40")
-        self.gridLayout_3.addWidget(self.label_40, 7, 2, 1, 1)
+        self.label_25 = QtWidgets.QLabel(self.verticalLayoutWidget_4)
+        self.label_25.setObjectName("label_25")
+        self.gridLayout_3.addWidget(self.label_25, 3, 2, 1, 1)
+        self.label_42 = QtWidgets.QLabel(self.verticalLayoutWidget_4)
+        self.label_42.setObjectName("label_42")
+        self.gridLayout_3.addWidget(self.label_42, 9, 2, 1, 1)
         self.label_39 = QtWidgets.QLabel(self.verticalLayoutWidget_4)
         self.label_39.setObjectName("label_39")
         self.gridLayout_3.addWidget(self.label_39, 6, 2, 1, 1)
-        self.WeeklyReport_special_ID_show = QtWidgets.QTextEdit(self.verticalLayoutWidget_4)
-        self.WeeklyReport_special_ID_show.setObjectName("WeeklyReport_special_ID_show")
-        self.gridLayout_3.addWidget(self.WeeklyReport_special_ID_show, 6, 3, 1, 1)
-        self.WeeklyReport_repair_ID_show = QtWidgets.QTextEdit(self.verticalLayoutWidget_4)
-        self.WeeklyReport_repair_ID_show.setObjectName("WeeklyReport_repair_ID_show")
-        self.gridLayout_3.addWidget(self.WeeklyReport_repair_ID_show, 7, 3, 1, 1)
-        self.WeeklyReport_repair_amount_show = QtWidgets.QTextEdit(self.verticalLayoutWidget_4)
+        self.label_41 = QtWidgets.QLabel(self.verticalLayoutWidget_4)
+        self.label_41.setObjectName("label_41")
+        self.gridLayout_3.addWidget(self.label_41, 8, 2, 1, 1)
+        self.WeeklyReport_tenth_amount_show = QtWidgets.QTextBrowser(self.verticalLayoutWidget_4)
+        self.WeeklyReport_tenth_amount_show.setObjectName("WeeklyReport_tenth_amount_show")
+        self.gridLayout_3.addWidget(self.WeeklyReport_tenth_amount_show, 2, 4, 1, 1)
+        self.WeeklyReport_sonday_amount_show = QtWidgets.QTextBrowser(self.verticalLayoutWidget_4)
+        self.WeeklyReport_sonday_amount_show.setObjectName("WeeklyReport_sonday_amount_show")
+        self.gridLayout_3.addWidget(self.WeeklyReport_sonday_amount_show, 3, 4, 1, 1)
+        self.label_23 = QtWidgets.QLabel(self.verticalLayoutWidget_4)
+        self.label_23.setObjectName("label_23")
+        self.gridLayout_3.addWidget(self.label_23, 1, 3, 1, 1)
+        self.label_29 = QtWidgets.QLabel(self.verticalLayoutWidget_4)
+        self.label_29.setObjectName("label_29")
+        self.gridLayout_3.addWidget(self.label_29, 4, 2, 1, 1)
+        self.label_34 = QtWidgets.QLabel(self.verticalLayoutWidget_4)
+        self.label_34.setObjectName("label_34")
+        self.gridLayout_3.addWidget(self.label_34, 0, 2, 1, 1)
+        self.WeeklyReport_date_from = QtWidgets.QDateEdit(self.verticalLayoutWidget_4)
+        self.WeeklyReport_date_from.setObjectName("WeeklyReport_date_from")
+        self.gridLayout_3.addWidget(self.WeeklyReport_date_from, 0, 3, 1, 1)
+        self.WeeklyReport_tenth_ID_show = QtWidgets.QTextBrowser(self.verticalLayoutWidget_4)
+        self.WeeklyReport_tenth_ID_show.setObjectName("WeeklyReport_tenth_ID_show")
+        self.gridLayout_3.addWidget(self.WeeklyReport_tenth_ID_show, 2, 3, 1, 1)
+        self.label_40 = QtWidgets.QLabel(self.verticalLayoutWidget_4)
+        self.label_40.setObjectName("label_40")
+        self.gridLayout_3.addWidget(self.label_40, 7, 2, 1, 1)
+        self.label_46 = QtWidgets.QLabel(self.verticalLayoutWidget_4)
+        self.label_46.setObjectName("label_46")
+        self.gridLayout_3.addWidget(self.label_46, 12, 2, 1, 1)
+        self.WeeklyReport_sonday_ID_show = QtWidgets.QTextBrowser(self.verticalLayoutWidget_4)
+        self.WeeklyReport_sonday_ID_show.setObjectName("WeeklyReport_sonday_ID_show")
+        self.gridLayout_3.addWidget(self.WeeklyReport_sonday_ID_show, 3, 3, 1, 1)
+        self.WeeklyReport_repair_amount_show = QtWidgets.QTextBrowser(self.verticalLayoutWidget_4)
         self.WeeklyReport_repair_amount_show.setObjectName("WeeklyReport_repair_amount_show")
-        self.gridLayout_3.addWidget(self.WeeklyReport_repair_amount_show, 7, 4, 1, 1)
-        self.WeeklyReport_specific_ID_show = QtWidgets.QTextEdit(self.verticalLayoutWidget_4)
-        self.WeeklyReport_specific_ID_show.setObjectName("WeeklyReport_specific_ID_show")
-        self.gridLayout_3.addWidget(self.WeeklyReport_specific_ID_show, 8, 3, 1, 1)
-        self.WeeklyReport_specific_amount_show = QtWidgets.QTextEdit(self.verticalLayoutWidget_4)
-        self.WeeklyReport_specific_amount_show.setObjectName("WeeklyReport_specific_amount_show")
-        self.gridLayout_3.addWidget(self.WeeklyReport_specific_amount_show, 8, 4, 1, 1)
-        self.WeeklyReport_others_ID_show = QtWidgets.QTextEdit(self.verticalLayoutWidget_4)
+        self.gridLayout_3.addWidget(self.WeeklyReport_repair_amount_show, 5, 4, 1, 1)
+        self.WeeklyReport_others_ID_show = QtWidgets.QTextBrowser(self.verticalLayoutWidget_4)
         self.WeeklyReport_others_ID_show.setObjectName("WeeklyReport_others_ID_show")
-        self.gridLayout_3.addWidget(self.WeeklyReport_others_ID_show, 9, 3, 1, 1)
-        self.WeeklyReport_others_amount_show = QtWidgets.QTextEdit(self.verticalLayoutWidget_4)
-        self.WeeklyReport_others_amount_show.setObjectName("WeeklyReport_others_amount_show")
-        self.gridLayout_3.addWidget(self.WeeklyReport_others_amount_show, 9, 4, 1, 1)
+        self.gridLayout_3.addWidget(self.WeeklyReport_others_ID_show, 10, 3, 1, 1)
+        self.WeeklyReport_person_ID_show = QtWidgets.QTextBrowser(self.verticalLayoutWidget_4)
+        self.WeeklyReport_person_ID_show.setObjectName("WeeklyReport_person_ID_show")
+        self.gridLayout_3.addWidget(self.WeeklyReport_person_ID_show, 11, 3, 1, 1)
+        self.WeeklyReport_person_amount_show = QtWidgets.QTextBrowser(self.verticalLayoutWidget_4)
+        self.WeeklyReport_person_amount_show.setObjectName("WeeklyReport_person_amount_show")
+        self.gridLayout_3.addWidget(self.WeeklyReport_person_amount_show, 11, 4, 1, 1)
+        self.WeeklyReport_repair_ID_show = QtWidgets.QTextBrowser(self.verticalLayoutWidget_4)
+        self.WeeklyReport_repair_ID_show.setObjectName("WeeklyReport_repair_ID_show")
+        self.gridLayout_3.addWidget(self.WeeklyReport_repair_ID_show, 5, 3, 1, 1)
+        self.WeeklyReport_charity_ID_show = QtWidgets.QTextBrowser(self.verticalLayoutWidget_4)
+        self.WeeklyReport_charity_ID_show.setObjectName("WeeklyReport_charity_ID_show")
+        self.gridLayout_3.addWidget(self.WeeklyReport_charity_ID_show, 7, 3, 1, 1)
+        self.WeeklyReport_charity_amount_show = QtWidgets.QTextBrowser(self.verticalLayoutWidget_4)
+        self.WeeklyReport_charity_amount_show.setObjectName("WeeklyReport_charity_amount_show")
+        self.gridLayout_3.addWidget(self.WeeklyReport_charity_amount_show, 7, 4, 1, 1)
+        self.WeeklyReport_cradle_ID_show = QtWidgets.QTextBrowser(self.verticalLayoutWidget_4)
+        self.WeeklyReport_cradle_ID_show.setObjectName("WeeklyReport_cradle_ID_show")
+        self.gridLayout_3.addWidget(self.WeeklyReport_cradle_ID_show, 9, 3, 1, 1)
+        self.WeeklyReport_cradle_amount_show = QtWidgets.QTextBrowser(self.verticalLayoutWidget_4)
+        self.WeeklyReport_cradle_amount_show.setObjectName("WeeklyReport_cradle_amount_show")
+        self.gridLayout_3.addWidget(self.WeeklyReport_cradle_amount_show, 9, 4, 1, 1)
+        self.WeeklyReport_evangelist_ID_show = QtWidgets.QTextBrowser(self.verticalLayoutWidget_4)
+        self.WeeklyReport_evangelist_ID_show.setObjectName("WeeklyReport_evangelist_ID_show")
+        self.gridLayout_3.addWidget(self.WeeklyReport_evangelist_ID_show, 8, 3, 1, 1)
+        self.WeeklyReport_firstfruit_ID_show = QtWidgets.QTextBrowser(self.verticalLayoutWidget_4)
+        self.WeeklyReport_firstfruit_ID_show.setObjectName("WeeklyReport_firstfruit_ID_show")
+        self.gridLayout_3.addWidget(self.WeeklyReport_firstfruit_ID_show, 6, 3, 1, 1)
+        self.WeeklyReport_firstfruit_amount_show = QtWidgets.QTextBrowser(self.verticalLayoutWidget_4)
+        self.WeeklyReport_firstfruit_amount_show.setObjectName("WeeklyReport_firstfruit_amount_show")
+        self.gridLayout_3.addWidget(self.WeeklyReport_firstfruit_amount_show, 6, 4, 1, 1)
+        self.WeeklyReport_other_amount_show = QtWidgets.QTextBrowser(self.verticalLayoutWidget_4)
+        self.WeeklyReport_other_amount_show.setObjectName("WeeklyReport_other_amount_show")
+        self.gridLayout_3.addWidget(self.WeeklyReport_other_amount_show, 10, 4, 1, 1)
+        self.WeeklyReport_thankful_ID_show = QtWidgets.QTextBrowser(self.verticalLayoutWidget_4)
+        self.WeeklyReport_thankful_ID_show.setObjectName("WeeklyReport_thankful_ID_show")
+        self.gridLayout_3.addWidget(self.WeeklyReport_thankful_ID_show, 4, 3, 1, 1)
+        self.WeeklyReport_thankful_amount_show = QtWidgets.QTextBrowser(self.verticalLayoutWidget_4)
+        self.WeeklyReport_thankful_amount_show.setObjectName("WeeklyReport_thankful_amount_show")
+        self.gridLayout_3.addWidget(self.WeeklyReport_thankful_amount_show, 4, 4, 1, 1)
+        self.WeeklyReport_total = QtWidgets.QTextBrowser(self.verticalLayoutWidget_4)
+        self.WeeklyReport_total.setObjectName("WeeklyReport_total")
+        self.gridLayout_3.addWidget(self.WeeklyReport_total, 12, 4, 1, 1)
+        self.WeeklyReportc_evangelist_amount_show = QtWidgets.QTextBrowser(self.verticalLayoutWidget_4)
+        self.WeeklyReportc_evangelist_amount_show.setObjectName("WeeklyReportc_evangelist_amount_show")
+        self.gridLayout_3.addWidget(self.WeeklyReportc_evangelist_amount_show, 8, 4, 1, 1)
         self.WeeklyReport_wrap.addLayout(self.gridLayout_3)
         self.verticalLayoutWidget_5 = QtWidgets.QWidget(self.scrollAreaWidgetContents_3)
-        self.verticalLayoutWidget_5.setGeometry(QtCore.QRect(1030, 20, 981, 235))
+        self.verticalLayoutWidget_5.setGeometry(QtCore.QRect(970, 10, 981, 235))
         self.verticalLayoutWidget_5.setObjectName("verticalLayoutWidget_5")
         self.Analysis_Search_wrap = QtWidgets.QVBoxLayout(self.verticalLayoutWidget_5)
         self.Analysis_Search_wrap.setContentsMargins(0, 0, 0, 0)
@@ -355,6 +382,9 @@ class Ui_Dialog(object):
         self.gridLayout_5 = QtWidgets.QGridLayout()
         self.gridLayout_5.setContentsMargins(6, 6, 6, 6)
         self.gridLayout_5.setObjectName("gridLayout_5")
+        self.Analysis_Search_ID_Name = QtWidgets.QLineEdit(self.verticalLayoutWidget_5)
+        self.Analysis_Search_ID_Name.setObjectName("Analysis_Search_ID_Name")
+        self.gridLayout_5.addWidget(self.Analysis_Search_ID_Name, 0, 1, 1, 1)
         self.Analysis_ID_Name_list = QtWidgets.QListWidget(self.verticalLayoutWidget_5)
         self.Analysis_ID_Name_list.setObjectName("Analysis_ID_Name_list")
         self.gridLayout_5.addWidget(self.Analysis_ID_Name_list, 1, 1, 1, 1)
@@ -364,18 +394,9 @@ class Ui_Dialog(object):
         self.label_19 = QtWidgets.QLabel(self.verticalLayoutWidget_5)
         self.label_19.setObjectName("label_19")
         self.gridLayout_5.addWidget(self.label_19, 0, 0, 1, 1)
-        self.Analysis_offering_data_button = QtWidgets.QRadioButton(self.verticalLayoutWidget_5)
-        self.Analysis_offering_data_button.setObjectName("Analysis_offering_data_button")
-        self.gridLayout_5.addWidget(self.Analysis_offering_data_button, 0, 2, 1, 1)
-        self.Analysis_user_data_button = QtWidgets.QRadioButton(self.verticalLayoutWidget_5)
-        self.Analysis_user_data_button.setObjectName("Analysis_user_data_button")
-        self.gridLayout_5.addWidget(self.Analysis_user_data_button, 0, 3, 1, 1)
         self.Analysis_Search_category = QtWidgets.QLineEdit(self.verticalLayoutWidget_5)
         self.Analysis_Search_category.setObjectName("Analysis_Search_category")
         self.gridLayout_5.addWidget(self.Analysis_Search_category, 2, 1, 1, 1)
-        self.Analysis_Search_ID_Name = QtWidgets.QLineEdit(self.verticalLayoutWidget_5)
-        self.Analysis_Search_ID_Name.setObjectName("Analysis_Search_ID_Name")
-        self.gridLayout_5.addWidget(self.Analysis_Search_ID_Name, 0, 1, 1, 1)
         self.Analysis_Search_wrap.addLayout(self.gridLayout_5)
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
@@ -389,9 +410,9 @@ class Ui_Dialog(object):
         self.label_24.setText("")
         self.label_24.setObjectName("label_24")
         self.horizontalLayout_3.addWidget(self.label_24)
-        self.Analysis_Search_date_to = QtWidgets.QDateEdit(self.verticalLayoutWidget_5)
-        self.Analysis_Search_date_to.setObjectName("Analysis_Search_date_to")
-        self.horizontalLayout_3.addWidget(self.Analysis_Search_date_to)
+        self.Analysis_Search_date_end = QtWidgets.QDateEdit(self.verticalLayoutWidget_5)
+        self.Analysis_Search_date_end.setObjectName("Analysis_Search_date_end")
+        self.horizontalLayout_3.addWidget(self.Analysis_Search_date_end)
         self.Analysis_date_all = QtWidgets.QCheckBox(self.verticalLayoutWidget_5)
         self.Analysis_date_all.setObjectName("Analysis_date_all")
         self.horizontalLayout_3.addWidget(self.Analysis_date_all)
@@ -399,9 +420,20 @@ class Ui_Dialog(object):
         self.Analysis_Search_pushButton.setObjectName("Analysis_Search_pushButton")
         self.horizontalLayout_3.addWidget(self.Analysis_Search_pushButton)
         self.Analysis_Search_wrap.addLayout(self.horizontalLayout_3)
-        self.Analysis_Search_results_show = QtWidgets.QTextBrowser(self.scrollAreaWidgetContents_3)
-        self.Analysis_Search_results_show.setGeometry(QtCore.QRect(790, 260, 1221, 921))
-        self.Analysis_Search_results_show.setObjectName("Analysis_Search_results_show")
+        self.Analysis_Search_table = QtWidgets.QTableWidget(self.scrollAreaWidgetContents_3)
+        self.Analysis_Search_table.setGeometry(QtCore.QRect(880, 260, 1131, 631))
+        self.Analysis_Search_table.setObjectName("Analysis_Search_table")
+        self.Analysis_Search_table.setColumnCount(0)
+        self.Analysis_Search_table.setRowCount(0)
+        self.Analysis_Search_show = QtWidgets.QTextBrowser(self.scrollAreaWidgetContents_3)
+        self.Analysis_Search_show.setGeometry(QtCore.QRect(880, 931, 1131, 251))
+        self.Analysis_Search_show.setObjectName("Analysis_Search_show")
+        self.label_14 = QtWidgets.QLabel(self.scrollAreaWidgetContents_3)
+        self.label_14.setGeometry(QtCore.QRect(880, 900, 231, 21))
+        self.label_14.setObjectName("label_14")
+        self.pushButton_2 = QtWidgets.QPushButton(self.scrollAreaWidgetContents_3)
+        self.pushButton_2.setGeometry(QtCore.QRect(1010, 890, 131, 41))
+        self.pushButton_2.setObjectName("pushButton_2")
         self.scrollArea_3.setWidget(self.scrollAreaWidgetContents_3)
         self.pushButton_9 = QtWidgets.QPushButton(self.tab_2)
         self.pushButton_9.setGeometry(QtCore.QRect(20, 0, 161, 41))
@@ -452,24 +484,23 @@ class Ui_Dialog(object):
         Dialog.setTabOrder(self.pushButton_9, self.pushButton_10)
         Dialog.setTabOrder(self.pushButton_10, self.pushButton_11)
         Dialog.setTabOrder(self.pushButton_11, self.scrollArea_3)
-        Dialog.setTabOrder(self.scrollArea_3, self.WeeklyReport_date)
-        Dialog.setTabOrder(self.WeeklyReport_date, self.WeeklyReport_tenth_ID_show)
+        Dialog.setTabOrder(self.scrollArea_3, self.WeeklyReport_date_from)
+        Dialog.setTabOrder(self.WeeklyReport_date_from, self.WeeklyReport_tenth_ID_show)
         Dialog.setTabOrder(self.WeeklyReport_tenth_ID_show, self.WeeklyReport_tenth_amount_show)
         Dialog.setTabOrder(self.WeeklyReport_tenth_amount_show, self.WeeklyReport_sonday_ID_show)
         Dialog.setTabOrder(self.WeeklyReport_sonday_ID_show, self.WeeklyReport_sonday_amount_show)
-        Dialog.setTabOrder(self.WeeklyReport_sonday_amount_show, self.WeeklyReport_firstfruit_ID_show)
-        Dialog.setTabOrder(self.WeeklyReport_firstfruit_ID_show, self.WeeklyReport_firstfruit_amount_show)
-        Dialog.setTabOrder(self.WeeklyReport_firstfruit_amount_show, self.WeeklyReport_thanks_ID_show)
-        Dialog.setTabOrder(self.WeeklyReport_thanks_ID_show, self.WeeklyReport_thanks_amount_show)
-        Dialog.setTabOrder(self.WeeklyReport_thanks_amount_show, self.WeeklyReport_special_ID_show)
-        Dialog.setTabOrder(self.WeeklyReport_special_ID_show, self.WeeklyReport_special_amount_show)
-        Dialog.setTabOrder(self.WeeklyReport_special_amount_show, self.WeeklyReport_repair_ID_show)
+        Dialog.setTabOrder(self.WeeklyReport_sonday_amount_show, self.WeeklyReport_thankful_ID_show)
+        Dialog.setTabOrder(self.WeeklyReport_thankful_ID_show, self.WeeklyReport_thankful_amount_show)
+        Dialog.setTabOrder(self.WeeklyReport_thankful_amount_show, self.WeeklyReport_repair_ID_show)
         Dialog.setTabOrder(self.WeeklyReport_repair_ID_show, self.WeeklyReport_repair_amount_show)
-        Dialog.setTabOrder(self.WeeklyReport_repair_amount_show, self.WeeklyReport_specific_ID_show)
-        Dialog.setTabOrder(self.WeeklyReport_specific_ID_show, self.WeeklyReport_specific_amount_show)
-        Dialog.setTabOrder(self.WeeklyReport_specific_amount_show, self.WeeklyReport_others_ID_show)
-        Dialog.setTabOrder(self.WeeklyReport_others_ID_show, self.WeeklyReport_others_amount_show)
-        Dialog.setTabOrder(self.WeeklyReport_others_amount_show, self.Analysis_Search_results_show)
+        Dialog.setTabOrder(self.WeeklyReport_repair_amount_show, self.WeeklyReport_firstfruit_ID_show)
+        Dialog.setTabOrder(self.WeeklyReport_firstfruit_ID_show, self.WeeklyReport_firstfruit_amount_show)
+        Dialog.setTabOrder(self.WeeklyReport_firstfruit_amount_show, self.WeeklyReport_charity_ID_show)
+        Dialog.setTabOrder(self.WeeklyReport_charity_ID_show, self.WeeklyReport_charity_amount_show)
+        Dialog.setTabOrder(self.WeeklyReport_charity_amount_show, self.WeeklyReport_evangelist_ID_show)
+        Dialog.setTabOrder(self.WeeklyReport_evangelist_ID_show, self.WeeklyReportc_evangelist_amount_show)
+        Dialog.setTabOrder(self.WeeklyReportc_evangelist_amount_show, self.WeeklyReport_cradle_ID_show)
+        Dialog.setTabOrder(self.WeeklyReport_cradle_ID_show, self.WeeklyReport_cradle_amount_show)
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
@@ -521,53 +552,21 @@ class Ui_Dialog(object):
         self.pushButton_5.setText(_translate("Dialog", "新增個人/團體資料"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.Tab1), _translate("Dialog", "資料處理"))
         self.label_20.setText(_translate("Dialog", "每週報表"))
-        self.WeeklyReport_special_amount_show.setHtml(_translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'標楷體\',\'標楷體\'; font-size:16pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'MS Shell Dlg 2\'; font-size:8pt;\"><br /></p></body></html>"))
-        self.label_32.setText(_translate("Dialog", "感恩奉獻"))
-        self.label_41.setText(_translate("Dialog", "指定奉獻"))
-        self.WeeklyReport_thanks_ID_show.setHtml(_translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'標楷體\',\'標楷體\'; font-size:16pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'MS Shell Dlg 2\'; font-size:8pt;\"><br /></p></body></html>"))
-        self.WeeklyReport_firstfruit_ID_show.setHtml(_translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'標楷體\',\'標楷體\'; font-size:16pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'MS Shell Dlg 2\'; font-size:8pt;\"><br /></p></body></html>"))
-        self.label_42.setText(_translate("Dialog", "其他奉獻"))
+        self.label_44.setText(_translate("Dialog", "其他奉獻"))
         self.label_26.setText(_translate("Dialog", "什一奉獻"))
-        self.label_25.setText(_translate("Dialog", "主日奉獻"))
-        self.label_29.setText(_translate("Dialog", "初熟奉獻"))
-        self.WeeklyReport_firstfruit_amount_show.setHtml(_translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'標楷體\',\'標楷體\'; font-size:16pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'MS Shell Dlg 2\'; font-size:8pt;\"><br /></p></body></html>"))
+        self.label_45.setText(_translate("Dialog", "個人奉獻"))
+        self.label_32.setText(_translate("Dialog", "修繕奉獻"))
         self.label_28.setText(_translate("Dialog", "金額"))
-        self.label_34.setText(_translate("Dialog", "日期"))
-        self.WeeklyReport_sonday_ID_show.setHtml(_translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'標楷體\',\'標楷體\'; font-size:16pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'MS Shell Dlg 2\'; font-size:8pt;\"><br /></p></body></html>"))
+        self.label_25.setText(_translate("Dialog", "主日奉獻"))
+        self.label_42.setText(_translate("Dialog", "搖籃奉獻"))
+        self.label_39.setText(_translate("Dialog", "初熟奉獻"))
+        self.label_41.setText(_translate("Dialog", "宣教奉獻"))
         self.label_23.setText(_translate("Dialog", "摘要"))
-        self.WeeklyReport_thanks_amount_show.setHtml(_translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'標楷體\',\'標楷體\'; font-size:16pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'MS Shell Dlg 2\'; font-size:8pt;\"><br /></p></body></html>"))
-        self.label_40.setText(_translate("Dialog", "修繕奉獻"))
-        self.label_39.setText(_translate("Dialog", "特別奉獻"))
-        self.WeeklyReport_special_ID_show.setHtml(_translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'標楷體\',\'標楷體\'; font-size:16pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'MS Shell Dlg 2\'; font-size:8pt;\"><br /></p></body></html>"))
-        self.WeeklyReport_repair_ID_show.setHtml(_translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.label_29.setText(_translate("Dialog", "感恩奉獻"))
+        self.label_34.setText(_translate("Dialog", "日期"))
+        self.label_40.setText(_translate("Dialog", "慈惠奉獻"))
+        self.label_46.setText(_translate("Dialog", "總計"))
+        self.WeeklyReport_sonday_ID_show.setHtml(_translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'標楷體\',\'標楷體\'; font-size:16pt; font-weight:400; font-style:normal;\">\n"
@@ -577,33 +576,93 @@ class Ui_Dialog(object):
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'標楷體\',\'標楷體\'; font-size:16pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'MS Shell Dlg 2\'; font-size:8pt;\"><br /></p></body></html>"))
-        self.WeeklyReport_specific_ID_show.setHtml(_translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'標楷體\',\'標楷體\'; font-size:16pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'MS Shell Dlg 2\'; font-size:8pt;\"><br /></p></body></html>"))
-        self.WeeklyReport_specific_amount_show.setHtml(_translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'標楷體\',\'標楷體\'; font-size:16pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'MS Shell Dlg 2\'; font-size:8pt;\"><br /></p></body></html>"))
         self.WeeklyReport_others_ID_show.setHtml(_translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'標楷體\',\'標楷體\'; font-size:16pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'MS Shell Dlg 2\'; font-size:8pt;\"><br /></p></body></html>"))
-        self.WeeklyReport_others_amount_show.setHtml(_translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.WeeklyReport_person_ID_show.setHtml(_translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'標楷體\',\'標楷體\'; font-size:16pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'MS Shell Dlg 2\'; font-size:8pt;\"><br /></p></body></html>"))
+        self.WeeklyReport_person_amount_show.setHtml(_translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'標楷體\',\'標楷體\'; font-size:16pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'MS Shell Dlg 2\'; font-size:8pt;\"><br /></p></body></html>"))
+        self.WeeklyReport_repair_ID_show.setHtml(_translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'標楷體\',\'標楷體\'; font-size:16pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'MS Shell Dlg 2\'; font-size:8pt;\"><br /></p></body></html>"))
+        self.WeeklyReport_charity_ID_show.setHtml(_translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'標楷體\',\'標楷體\'; font-size:16pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'MS Shell Dlg 2\'; font-size:8pt;\"><br /></p></body></html>"))
+        self.WeeklyReport_charity_amount_show.setHtml(_translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'標楷體\',\'標楷體\'; font-size:16pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'MS Shell Dlg 2\'; font-size:8pt;\"><br /></p></body></html>"))
+        self.WeeklyReport_cradle_ID_show.setHtml(_translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'標楷體\',\'標楷體\'; font-size:16pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'MS Shell Dlg 2\'; font-size:8pt;\"><br /></p></body></html>"))
+        self.WeeklyReport_cradle_amount_show.setHtml(_translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'標楷體\',\'標楷體\'; font-size:16pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'MS Shell Dlg 2\'; font-size:8pt;\"><br /></p></body></html>"))
+        self.WeeklyReport_evangelist_ID_show.setHtml(_translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'標楷體\',\'標楷體\'; font-size:16pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'MS Shell Dlg 2\'; font-size:8pt;\"><br /></p></body></html>"))
+        self.WeeklyReport_firstfruit_ID_show.setHtml(_translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'標楷體\',\'標楷體\'; font-size:16pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'MS Shell Dlg 2\'; font-size:8pt;\"><br /></p></body></html>"))
+        self.WeeklyReport_firstfruit_amount_show.setHtml(_translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'標楷體\',\'標楷體\'; font-size:16pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'MS Shell Dlg 2\'; font-size:8pt;\"><br /></p></body></html>"))
+        self.WeeklyReport_other_amount_show.setHtml(_translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'標楷體\',\'標楷體\'; font-size:16pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'MS Shell Dlg 2\'; font-size:8pt;\"><br /></p></body></html>"))
+        self.WeeklyReport_thankful_ID_show.setHtml(_translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'標楷體\',\'標楷體\'; font-size:16pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'MS Shell Dlg 2\'; font-size:8pt;\"><br /></p></body></html>"))
+        self.WeeklyReport_thankful_amount_show.setHtml(_translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'標楷體\',\'標楷體\'; font-size:16pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'MS Shell Dlg 2\'; font-size:8pt;\"><br /></p></body></html>"))
+        self.WeeklyReport_total.setHtml(_translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'標楷體\',\'標楷體\'; font-size:16pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'MS Shell Dlg 2\'; font-size:8pt;\"><br /></p></body></html>"))
+        self.WeeklyReportc_evangelist_amount_show.setHtml(_translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'標楷體\',\'標楷體\'; font-size:16pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'MS Shell Dlg 2\'; font-size:8pt;\"><br /></p></body></html>"))
         self.label_43.setText(_translate("Dialog", "查詢奉獻項目"))
         self.label_19.setText(_translate("Dialog", "查詢ID/姓名"))
-        self.Analysis_offering_data_button.setText(_translate("Dialog", "奉獻資料"))
-        self.Analysis_user_data_button.setText(_translate("Dialog", "個人資料"))
         self.label_22.setText(_translate("Dialog", "日期          "))
         self.Analysis_date_all.setText(_translate("Dialog", "全部時間"))
         self.Analysis_Search_pushButton.setText(_translate("Dialog", "   查詢   "))
+        self.label_14.setText(_translate("Dialog", "總額與明細"))
+        self.pushButton_2.setText(_translate("Dialog", "excel下載"))
         self.pushButton_9.setText(_translate("Dialog", "每週報表"))
         self.pushButton_10.setText(_translate("Dialog", "個人明細"))
         self.pushButton_11.setText(_translate("Dialog", "特定奉獻項目明細"))
