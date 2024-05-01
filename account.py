@@ -6,6 +6,7 @@ import numpy as np
 import logging
 import time
 from datetime import datetime
+import pandas as pd
 # import matplotlib.pyplot as plt
 # import matplotlib.dates 
 import math
@@ -24,7 +25,7 @@ class Window(QDialog, ui.Ui_Dialog):
         self.con = sqlite3.connect('database.db')
         self.cursorObj = self.con.cursor()
         self.cursorObj.execute('create table if not exists user(id INTEGER PRIMARY KEY, name UNIQUE, ID_card, offeringID UNIQUE, phone, address)')
-        self.cursorObj.execute('create table if not exists offering(id INTEGER PRIMARY KEY, offeringID, date, category, amount, note, receipt, payment_type) ')        
+        self.cursorObj.execute('create table if not exists offering(id INTEGER PRIMARY KEY, offeringID, name, date, category, amount, note, receipt, payment_type) ')        
         self.con.commit() 
         
         cursor = self.cursorObj.execute("SELECT * from offering").fetchall()
@@ -83,32 +84,49 @@ class Window(QDialog, ui.Ui_Dialog):
 
         # Weekly report 
         # self.WeeklyReport_wrap
-        self.WeeklyReport_date.setDate(QtCore.QDate().currentDate())
+        self.WeeklyReport_date_from.setDate(QtCore.QDate().currentDate())
+        self.WeeklyReport_date_end.setDate(QtCore.QDate().currentDate())
+        self.WeeklyReport_date_from.dateChanged.connect(lambda : self.WeeklyReport_date_onchange)
+
         # WeeklyReport_tenth_ID_show
         # WeeklyReport_tenth_amount_show
         # WeeklyReport_sonday_ID_show
 
         # WeeklyReport_firstfruit_ID_show
 
-        # WeeklyReport_thanks_ID_show
-
-        # WeeklyReport_special_ID_show
+        # WeeklyReport_thankful_ID_show
 
         # WeeklyReport_repair_ID_show
 
-        # WeeklyReport_specific_ID_show
 
-        # WeeklyReport_others_ID_show
+        # WeeklyReport_other_ID_show
 
         # Analysis Search
         # self.Analysis_Search_wrap
-        # Analysis_Search_ID_Name
-        # Analysis_Search_pushButton
+        self.Analysis_name, self.Analysis_offeringID = "", ""
         self.Analysis_Search_date_from.setDate(QtCore.QDate().currentDate())
-        self.Analysis_Search_date_to.setDate(QtCore.QDate().currentDate())
+        self.Analysis_Search_date_end.setDate(QtCore.QDate().currentDate())
+        self.Analysis_Search_ID_Name.textChanged.connect(lambda id_name: self.Analysis_Search_ID_Name_onchange(id_name,id_name))
+        self.Analysis_ID_Name_list.clicked.connect(self.Analysis_ID_Name_list_onchange)
+        self.Analysis_Search_pushButton.clicked.connect(lambda: self.Search_pushButton_onchange(self.Analysis_offeringID, \
+                                                                                       "offering", \
+                                                                                        str(self.Analysis_Search_category.text()), \
+                                                                                       datetime.strptime(self.Analysis_Search_date_from.date().toString("yyyy-MM-dd"), '%Y-%m-%d').date(), \
+                                                                                       datetime.strptime(self.Analysis_Search_date_end.date().toString("yyyy-MM-dd"), '%Y-%m-%d').date() ))
+
+
+        self.Analysis_Search_dataset_download.clicked.connect(self.Analysis_Search_dataset_download_onchange)
 
     def status_clear_onchange(self):
         self.status_note.setText("")
+
+    def sql_operation(self, query):
+        self.con = sqlite3.connect('database.db')
+        self.cursorObj = self.con.cursor()
+        cursor = self.cursorObj.execute(query).fetchall()
+        self.con.commit()
+        return cursor
+
 
     '''
     ADD USER
@@ -195,14 +213,14 @@ class Window(QDialog, ui.Ui_Dialog):
             # maybe use 0/1
             want_receipt = "Yes" if self.ADD_offering_receipt.isChecked() else "No"
             try:
-                cursor = self.cursorObj.execute("insert into offering(offeringID , date, category, amount, note, receipt, payment_type) VALUES (?,?,?,?,?,?,?)",\
-                                                (str(self.ADD_offering_offeringID), datetime.strptime(self.ADD_offering_date.date().toString("yyyy-MM-dd"), '%Y-%m-%d').date(),str(self.ADD_offering_category.currentText()), str(self.ADD_offering_amount.text()),str(self.ADD_offering_note.toPlainText()), want_receipt, str(self.ADD_offering_paytype.currentText())))
+                cursor = self.cursorObj.execute("insert into offering(offeringID ,name, date, category, amount, note, receipt, payment_type) VALUES (?,?,?,?,?,?,?,?)",\
+                                                (str(self.ADD_offering_offeringID), str(self.ADD_offering_name), datetime.strptime(self.ADD_offering_date.date().toString("yyyy-MM-dd"), '%Y-%m-%d').date(),str(self.ADD_offering_category.currentText()), str(self.ADD_offering_amount.text()),str(self.ADD_offering_note.toPlainText()), want_receipt, str(self.ADD_offering_paytype.currentText())))
                 self.con.commit()
 
                 cursor = self.cursorObj.execute("SELECT * FROM offering ORDER BY id DESC LIMIT 1")
                 self.status_note.append(f"Success, 新增 {[row for row in cursor]}")
                 self.con.commit()
-
+                # update table
                 self.Search_pushButton_onchange("", \
                                                 "offering", \
                                                 "", \
@@ -227,7 +245,7 @@ class Window(QDialog, ui.Ui_Dialog):
     '''
     Search and Update
     
-    ID_Name_onchange
+    ID_Name_onchange (shared with analysis)
     Search_ID_Name_list_onchange
     Search_field_onchange
     Search_sql
@@ -245,7 +263,6 @@ class Window(QDialog, ui.Ui_Dialog):
 
                 self.Search_ID_Name_list.clear()
                 self.Search_ID_Name_list.addItems(res)
-
                 self.con.commit()
             except:
                 pass   
@@ -269,19 +286,18 @@ class Window(QDialog, ui.Ui_Dialog):
         filter = []
         if person: filter.append(f"(offeringID = '{str(person)}')")
         if field == "offering":
-            if offering_category: filter.append(f"(category = '{str(offering_category)}' OR note LIKE '%{str(offering_category)}%')")
+            if offering_category: filter.append(f"(category LIKE '%{str(offering_category)}%' OR note LIKE '%{str(offering_category)}%')")
             
-            if not self.Search_date_all.isChecked():
+            # in which tab
+            search_all_date = (not self.Analysis_date_all.isChecked()) if self.tabWidget.currentIndex() else (not self.Search_date_all.isChecked())
+            if search_all_date:
                 if date_from and date_end: filter.append(f"(date between '{datetime.strptime(str(date_from), '%Y-%m-%d').date()}' \
                                                             AND '{datetime.strptime(str(date_end), '%Y-%m-%d').date()}')")
-
         if filter:
             sql += " WHERE" + " AND ".join(filter)
 
         return sql
     
-
-
     def Search_pushButton_onchange(self, person = "", field = "offering", offering_category = "", date_from = "", date_end = ""):
         
         self.con = sqlite3.connect('database.db')
@@ -291,32 +307,66 @@ class Window(QDialog, ui.Ui_Dialog):
         cursor = self.cursorObj.execute(sql).fetchall()
         self.con.commit()
 
-        self.Search_table.setRowCount(0)
+        which_table = self.Analysis_Search_table if self.tabWidget.currentIndex() else self.Search_table
+
+        which_table.setRowCount(0)
         if len(cursor) > 0:
-            self.Search_table.setColumnCount(len(cursor[0]))      
+            which_table.setColumnCount(len(cursor[0]))      
 
         # Notice that col headers are manual
         if field == "user":
-            self.Search_table.setHorizontalHeaderLabels(('unique key', '姓名', '身分證', '奉獻編號', '電話', '地址'))
+            which_table.setHorizontalHeaderLabels(('unique key', '姓名', '身分證', '奉獻編號', '電話', '地址'))
         else:
-            self.Search_table.setHorizontalHeaderLabels(('unique key', '奉獻編號', '日期', '奉獻項目', '金額', '備註', '收據', '奉獻方式'))
+            which_table.setHorizontalHeaderLabels(('unique key', '奉獻編號', '日期', '奉獻項目', '金額', '備註', '收據', '奉獻方式'))
 
         for row_number, row_data in enumerate(cursor):
-            self.Search_table.insertRow(row_number)
+            which_table.insertRow(row_number)
             for column_number, data in enumerate(row_data):
                 if data == None:
                     data = ""
-                    self.Search_table.setItem(row_number,
+                    which_table.setItem(row_number,
                     column_number, QTableWidgetItem(str(data)))
                 else:
                     item = QTableWidgetItem(str(data))
                     # https://blog.csdn.net/qq_41539778/article/details/119205439
                     item.setFlags(QtCore.Qt.ItemFlags(int("111111", 2))) # item.flags() ^ QtCore.Qt.ItemIsEditable
-                    self.Search_table.setItem(row_number, column_number, item)
-                   
-            # deleteButton = QtWidgets.QPushButton("刪除")
-            # deleteButton.setDown(False) 
-            # self.Search_table.setCellWidget(row_number, len(cursor[0]), deleteButton)
+                    which_table.setItem(row_number, column_number, item)
+        # tab 2
+        if self.tabWidget.currentIndex():
+            self.Analysis_Search_show.setText("")
+
+            sumAmount = f"SUM(CASE WHEN `date` BETWEEN  '{datetime.strptime(str(date_from), '%Y-%m-%d').date()}' and '{datetime.strptime(str(date_end), '%Y-%m-%d').date()}' THEN amount ELSE 0 END) AS 'TOTAL'"
+            
+            # case all people
+            if ("category" not in sql) and ("offeringID" not in sql):
+                sum_up = f"SELECT `name`, {sumAmount} FROM offering GROUP BY `offeringID`"
+                cursor = self.sql_operation(sum_up)
+                self.Analysis_Search_show.append(f"從 {date_from} 到 {date_end}, 所有人奉獻收據")
+                for row in cursor:
+                    self.Analysis_Search_show.append(f"{row[0]}, {row[1]}, 月定(什一)奉獻收入. 等, 自{date_from} 至 {date_end}")
+            
+            # case one person
+            elif "category" not in sql:
+                sum_up = f"SELECT `name`, {sumAmount} FROM offering WHERE offeringID = '{str(person)}'"
+                cursor = self.sql_operation(sum_up)
+                self.Analysis_Search_show.append(f"從 {date_from} 到 {date_end}, 個人奉獻收據")
+                for row in cursor:
+                    self.Analysis_Search_show.append(f"{row[0]}, {row[1]}, 月定(什一)奉獻收入. 等, 自{date_from} 至 {date_end}")
+            # case category
+            elif "offeringID" not in sql:
+                sum_up = f"SELECT `category`, {sumAmount} FROM offering WHERE (category LIKE '%{str(offering_category)}%' OR note LIKE '%{str(offering_category)}%')"
+                cursor = self.sql_operation(sum_up)
+                self.Analysis_Search_show.append(f"從 {date_from} 到 {date_end}, 項目奉獻收據")
+                for row in cursor:
+                    self.Analysis_Search_show.append(f"{row[0]} {row[1]}元, 自{date_from} 至 {date_end}")
+            else:
+                sum_up = f"SELECT `name`, `category`, {sumAmount} FROM offering WHERE (category LIKE '%{str(offering_category)}%' OR note LIKE '%{str(offering_category)}%') AND (offeringID = '{str(person)}')"
+                cursor = self.sql_operation(sum_up)
+                self.Analysis_Search_show.append(f"從 {date_from} 到 {date_end}, 個人項目奉獻收據")
+                for row in cursor:
+                    self.Analysis_Search_show.append(f"{row[0]}, {row[1]}, {row[2]}, 自{date_from} 至 {date_end}")
+
+
     
     def Search_table_update_onchange(self, row, col):
         # https://zhuanlan.zhihu.com/p/58619107
@@ -347,11 +397,10 @@ class Window(QDialog, ui.Ui_Dialog):
 
             # if reply == QMessageBox.Yes:
             if not res:
-                self.con = sqlite3.connect('database.db')
-                self.cursorObj = self.con.cursor()
-                cursor = self.cursorObj.execute(f"DELETE FROM {self.Search_table_type} WHERE id = '{self.Search_table.item(cur_row,0).text()}'")
-                self.con.commit()
+                query = f"DELETE FROM {self.Search_table_type} WHERE id = '{self.Search_table.item(cur_row,0).text()}'"
+                cursor = self.sql_operation(query)
 
+                # update table
                 self.Search_pushButton_onchange(self.Search_offeringID, \
                                                 self.Search_table_type, \
                                                 "", \
@@ -360,9 +409,54 @@ class Window(QDialog, ui.Ui_Dialog):
         else:
             pass
             
-# np.char.split(np.char.strip(str(res), chars = "[]()"), ',') 
+    '''
+    WeeklyReport
 
+    '''
 
+#     def WeeklyReport_date_onchange(self):
+
+#         offering_category = ["什一奉獻", "主日奉獻", "感恩奉獻", "修繕奉獻", "初熟奉獻", "慈惠奉獻", "宣教奉獻", "搖籃奉獻", "其他奉獻", "個人奉獻"]
+#         self.con = sqlite3.connect('database.db')
+#         self.cursorObj = self.con.cursor()
+
+    '''
+    Analysis_Search
+
+    '''
+    def Analysis_Search_ID_Name_onchange(self, name, id):
+        if name and id:
+            try:
+                self.con = sqlite3.connect('database.db')
+                self.cursorObj = self.con.cursor()
+                cursor = self.cursorObj.execute(f"SELECT name, offeringID FROM user WHERE  name LIKE '%{str(name)}%' OR offeringID LIKE '%{str(id)}%'")
+                res = [f"姓名: {name}, 編號: {offeringID}" for name, offeringID in cursor]
+
+                self.Analysis_ID_Name_list.clear()
+                self.Analysis_ID_Name_list.addItems(res)
+
+                self.con.commit()
+            except:
+                pass   
+        else:
+            self.Analysis_ID_Name_list.clear()
+            self.Analysis_name, self.Analysis_offeringID = "", ""
+
+    def Analysis_ID_Name_list_onchange(self):
+        curr = np.char.split(self.Analysis_ID_Name_list.currentItem().text(), ' ').tolist()
+        self.Analysis_name, self.Analysis_offeringID = curr[1], curr[3]
+
+    def Analysis_Search_dataset_download_onchange(self):
+        self.con = sqlite3.connect('database.db')
+        self.cursorObj = self.con.cursor()
+        cursor = self.cursorObj.execute("SELECT name FROM sqlite_master WHERE type ='table' AND name NOT LIKE 'sqlite_%'")
+
+        filename = "dataset_to_excel.xlsx"
+        writer= pd.ExcelWriter(filename, engine='xlsxwriter')
+        for table_name in cursor:
+            df = pd.read_sql(f"SELECT * FROM {table_name[0]}", self.con)
+            df.to_excel(writer, sheet_name=f"{table_name[0]}", index=False)
+        writer.close()
 
 if __name__ == '__main__':
     # app = QApplication([])
