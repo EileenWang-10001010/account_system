@@ -324,9 +324,9 @@ class Ui_Dialog(object):
         self.WeeklyReport_repair_amount_show = QtWidgets.QTextBrowser(self.verticalLayoutWidget_4)
         self.WeeklyReport_repair_amount_show.setObjectName("WeeklyReport_repair_amount_show")
         self.gridLayout_3.addWidget(self.WeeklyReport_repair_amount_show, 5, 4, 1, 1)
-        self.WeeklyReport_others_ID_show = QtWidgets.QTextBrowser(self.verticalLayoutWidget_4)
-        self.WeeklyReport_others_ID_show.setObjectName("WeeklyReport_others_ID_show")
-        self.gridLayout_3.addWidget(self.WeeklyReport_others_ID_show, 10, 3, 1, 1)
+        self.WeeklyReport_other_ID_show = QtWidgets.QTextBrowser(self.verticalLayoutWidget_4)
+        self.WeeklyReport_other_ID_show.setObjectName("WeeklyReport_other_ID_show")
+        self.gridLayout_3.addWidget(self.WeeklyReport_other_ID_show, 10, 3, 1, 1)
         self.WeeklyReport_person_ID_show = QtWidgets.QTextBrowser(self.verticalLayoutWidget_4)
         self.WeeklyReport_person_ID_show.setObjectName("WeeklyReport_person_ID_show")
         self.gridLayout_3.addWidget(self.WeeklyReport_person_ID_show, 11, 3, 1, 1)
@@ -369,9 +369,9 @@ class Ui_Dialog(object):
         self.WeeklyReport_total = QtWidgets.QTextBrowser(self.verticalLayoutWidget_4)
         self.WeeklyReport_total.setObjectName("WeeklyReport_total")
         self.gridLayout_3.addWidget(self.WeeklyReport_total, 12, 4, 1, 1)
-        self.WeeklyReportc_evangelist_amount_show = QtWidgets.QTextBrowser(self.verticalLayoutWidget_4)
-        self.WeeklyReportc_evangelist_amount_show.setObjectName("WeeklyReportc_evangelist_amount_show")
-        self.gridLayout_3.addWidget(self.WeeklyReportc_evangelist_amount_show, 8, 4, 1, 1)
+        self.WeeklyReport_evangelist_amount_show = QtWidgets.QTextBrowser(self.verticalLayoutWidget_4)
+        self.WeeklyReport_evangelist_amount_show.setObjectName("WeeklyReport_evangelist_amount_show")
+        self.gridLayout_3.addWidget(self.WeeklyReport_evangelist_amount_show, 8, 4, 1, 1)
         self.WeeklyReport_wrap.addLayout(self.gridLayout_3)
         self.verticalLayoutWidget_5 = QtWidgets.QWidget(self.scrollAreaWidgetContents_3)
         self.verticalLayoutWidget_5.setGeometry(QtCore.QRect(880, 10, 1131, 235))
@@ -464,7 +464,7 @@ class Ui_Dialog(object):
         self.label_19.setBuddy(self.Search_ID_Name)
 
         self.retranslateUi(Dialog)
-        self.tabWidget.setCurrentIndex(1)
+        self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
         Dialog.setTabOrder(self.tabWidget, self.pushButton_4)
         Dialog.setTabOrder(self.pushButton_4, self.pushButton_5)
@@ -501,8 +501,8 @@ class Ui_Dialog(object):
         Dialog.setTabOrder(self.WeeklyReport_firstfruit_amount_show, self.WeeklyReport_charity_ID_show)
         Dialog.setTabOrder(self.WeeklyReport_charity_ID_show, self.WeeklyReport_charity_amount_show)
         Dialog.setTabOrder(self.WeeklyReport_charity_amount_show, self.WeeklyReport_evangelist_ID_show)
-        Dialog.setTabOrder(self.WeeklyReport_evangelist_ID_show, self.WeeklyReportc_evangelist_amount_show)
-        Dialog.setTabOrder(self.WeeklyReportc_evangelist_amount_show, self.WeeklyReport_cradle_ID_show)
+        Dialog.setTabOrder(self.WeeklyReport_evangelist_ID_show, self.WeeklyReport_evangelist_amount_show)
+        Dialog.setTabOrder(self.WeeklyReport_evangelist_amount_show, self.WeeklyReport_cradle_ID_show)
         Dialog.setTabOrder(self.WeeklyReport_cradle_ID_show, self.WeeklyReport_cradle_amount_show)
 
     def retranslateUi(self, Dialog):
@@ -579,7 +579,7 @@ class Ui_Dialog(object):
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'標楷體\',\'標楷體\'; font-size:16pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'MS Shell Dlg 2\'; font-size:8pt;\"><br /></p></body></html>"))
-        self.WeeklyReport_others_ID_show.setHtml(_translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.WeeklyReport_other_ID_show.setHtml(_translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'標楷體\',\'標楷體\'; font-size:16pt; font-weight:400; font-style:normal;\">\n"
@@ -654,7 +654,7 @@ class Ui_Dialog(object):
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'標楷體\',\'標楷體\'; font-size:16pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'MS Shell Dlg 2\'; font-size:8pt;\"><br /></p></body></html>"))
-        self.WeeklyReportc_evangelist_amount_show.setHtml(_translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.WeeklyReport_evangelist_amount_show.setHtml(_translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'標楷體\',\'標楷體\'; font-size:16pt; font-weight:400; font-style:normal;\">\n"
