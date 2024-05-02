@@ -86,20 +86,8 @@ class Window(QDialog, ui.Ui_Dialog):
         # self.WeeklyReport_wrap
         self.WeeklyReport_date_from.setDate(QtCore.QDate().currentDate())
         self.WeeklyReport_date_end.setDate(QtCore.QDate().currentDate())
-        self.WeeklyReport_date_from.dateChanged.connect(lambda : self.WeeklyReport_date_onchange)
-
-        # WeeklyReport_tenth_ID_show
-        # WeeklyReport_tenth_amount_show
-        # WeeklyReport_sonday_ID_show
-
-        # WeeklyReport_firstfruit_ID_show
-
-        # WeeklyReport_thankful_ID_show
-
-        # WeeklyReport_repair_ID_show
-
-
-        # WeeklyReport_other_ID_show
+        self.WeeklyReport_date_from.dateChanged.connect(self.WeeklyReport_date_onchange)
+        self.WeeklyReport_date_end.dateChanged.connect(self.WeeklyReport_date_onchange)
 
         # Analysis Search
         # self.Analysis_Search_wrap
@@ -114,7 +102,7 @@ class Window(QDialog, ui.Ui_Dialog):
                                                                                        datetime.strptime(self.Analysis_Search_date_from.date().toString("yyyy-MM-dd"), '%Y-%m-%d').date(), \
                                                                                        datetime.strptime(self.Analysis_Search_date_end.date().toString("yyyy-MM-dd"), '%Y-%m-%d').date() ))
 
-
+        self.Analysis_Search_show_download.clicked.connect(self.Analysis_Search_show_download_onchange)
         self.Analysis_Search_dataset_download.clicked.connect(self.Analysis_Search_dataset_download_onchange)
 
     def status_clear_onchange(self):
@@ -358,7 +346,7 @@ class Window(QDialog, ui.Ui_Dialog):
                 cursor = self.sql_operation(sum_up)
                 self.Analysis_Search_show.append(f"從 {date_from} 到 {date_end}, 項目奉獻收據")
                 for row in cursor:
-                    self.Analysis_Search_show.append(f"{row[0]} {row[1]}元, 自{date_from} 至 {date_end}")
+                    self.Analysis_Search_show.append(f"{row[0]}, {row[1]}元, 自{date_from} 至 {date_end}")
             else:
                 sum_up = f"SELECT `name`, `category`, {sumAmount} FROM offering WHERE (category LIKE '%{str(offering_category)}%' OR note LIKE '%{str(offering_category)}%') AND (offeringID = '{str(person)}')"
                 cursor = self.sql_operation(sum_up)
@@ -411,18 +399,44 @@ class Window(QDialog, ui.Ui_Dialog):
             
     '''
     WeeklyReport
-
     '''
 
-#     def WeeklyReport_date_onchange(self):
+    def WeeklyReport_date_onchange(self):
+        offering_category = {'什一奉獻':(self.WeeklyReport_tenth_ID_show, self.WeeklyReport_tenth_amount_show),
+                             '主日奉獻':(self.WeeklyReport_sonday_ID_show, self.WeeklyReport_sonday_amount_show), 
+                             '感恩奉獻':(self.WeeklyReport_thankful_ID_show, self.WeeklyReport_thankful_amount_show), 
+                             '修繕奉獻':(self.WeeklyReport_repair_ID_show, self.WeeklyReport_repair_amount_show), 
+                             '初熟奉獻':(self.WeeklyReport_firstfruit_ID_show, self.WeeklyReport_firstfruit_amount_show), 
+                             '慈惠奉獻':(self.WeeklyReport_charity_ID_show, self.WeeklyReport_charity_amount_show), 
+                             '宣教奉獻':(self.WeeklyReport_evangelist_ID_show, self.WeeklyReport_evangelist_amount_show), 
+                             '搖籃奉獻':(self.WeeklyReport_cradle_ID_show, self.WeeklyReport_cradle_amount_show), 
+                             '其他奉獻':(self.WeeklyReport_other_ID_show, self.WeeklyReport_other_amount_show), 
+                             '個人奉獻':(self.WeeklyReport_person_ID_show, self.WeeklyReport_person_amount_show)}
+        
+        sumAmount = f"SUM(CASE WHEN `date` BETWEEN  '{datetime.strptime(self.WeeklyReport_date_from.date().toString('yyyy-MM-dd'), '%Y-%m-%d').date()}' and '{datetime.strptime(self.WeeklyReport_date_end.date().toString('yyyy-MM-dd'), '%Y-%m-%d').date()}' THEN amount ELSE 0 END) AS 'TOTAL' "
+        total_sum = 0
+        try:
+            for category, (ID_show, amount_show)  in offering_category.items():
+                query = f"SELECT `offeringID`, {sumAmount} FROM offering WHERE (category = '{str(category)}') GROUP BY `offeringID`"
+                cursor = self.sql_operation(query)
+                sum_up = 0
+                ID_show.setText("")
+                amount_show.setText("")
 
-#         offering_category = ["什一奉獻", "主日奉獻", "感恩奉獻", "修繕奉獻", "初熟奉獻", "慈惠奉獻", "宣教奉獻", "搖籃奉獻", "其他奉獻", "個人奉獻"]
-#         self.con = sqlite3.connect('database.db')
-#         self.cursorObj = self.con.cursor()
+                for row in cursor:
+                    if int(row[1]) > 0:
+                        ID_show.append(f"{row[0]}")
+                        sum_up += int(row[1])
+
+                amount_show.append(f"{sum_up}")
+                total_sum += sum_up
+
+            self.WeeklyReport_total.setText(f"{total_sum}")
+        except:
+            pass
 
     '''
     Analysis_Search
-
     '''
     def Analysis_Search_ID_Name_onchange(self, name, id):
         if name and id:
@@ -451,12 +465,24 @@ class Window(QDialog, ui.Ui_Dialog):
         self.cursorObj = self.con.cursor()
         cursor = self.cursorObj.execute("SELECT name FROM sqlite_master WHERE type ='table' AND name NOT LIKE 'sqlite_%'")
 
-        filename = "dataset_to_excel.xlsx"
+        filename = f"dataset_to_excel_{datetime.today().date()}.xlsx"
         writer= pd.ExcelWriter(filename, engine='xlsxwriter')
         for table_name in cursor:
             df = pd.read_sql(f"SELECT * FROM {table_name[0]}", self.con)
             df.to_excel(writer, sheet_name=f"{table_name[0]}", index=False)
         writer.close()
+
+    def Analysis_Search_show_download_onchange(self):
+        try:
+            if self.Analysis_Search_show.toPlainText():
+                lst = np.char.split(self.Analysis_Search_show.toPlainText(), '\n').tolist()
+                sheetname = f"{lst[0].split(',')[1]}"
+                data = [np.char.split(item, ',').tolist() for item in lst]
+                df = pd.DataFrame(data)
+                filename = f"browser_to_excel_{datetime.today().date()}.xlsx"
+                df.to_excel(filename, sheet_name=sheetname, index=False)
+        except:
+            pass
 
 if __name__ == '__main__':
     # app = QApplication([])
