@@ -305,7 +305,7 @@ class Window(QDialog, ui.Ui_Dialog):
         if field == "user":
             which_table.setHorizontalHeaderLabels(('unique key', '姓名', '身分證', '奉獻編號', '電話', '地址'))
         else:
-            which_table.setHorizontalHeaderLabels(('unique key', '奉獻編號', '日期', '奉獻項目', '金額', '備註', '收據', '奉獻方式'))
+            which_table.setHorizontalHeaderLabels(('unique key', '奉獻編號', '姓名', '日期', '奉獻項目', '金額', '備註', '收據', '奉獻方式'))
 
         for row_number, row_data in enumerate(cursor):
             which_table.insertRow(row_number)
