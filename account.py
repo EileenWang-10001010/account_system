@@ -28,10 +28,11 @@ class Window(QDialog, ui.Ui_Dialog):
         self.cursorObj.execute('create table if not exists offering(id INTEGER PRIMARY KEY, offeringID, name, date, category, amount, note, receipt, payment_type) ')        
         self.con.commit() 
         
-        cursor = self.cursorObj.execute("SELECT * from offering").fetchall()
-        print(cursor)
-        cursor = self.cursorObj.execute("SELECT * from user").fetchall()
-        print(cursor)
+        # cursor = self.cursorObj.execute("SELECT * from offering").fetchall()
+        # print(cursor)
+        # cursor = self.cursorObj.execute("SELECT * from user").fetchall()
+        # print(cursor)
+        
         # status clear
         self.status_clear.clicked.connect(self.status_clear_onchange)
 
@@ -88,6 +89,7 @@ class Window(QDialog, ui.Ui_Dialog):
         self.WeeklyReport_date_end.setDate(QtCore.QDate().currentDate())
         self.WeeklyReport_date_from.dateChanged.connect(self.WeeklyReport_date_onchange)
         self.WeeklyReport_date_end.dateChanged.connect(self.WeeklyReport_date_onchange)
+        self.WeeklyReport_button.clicked.connect(self.WeeklyReport_date_onchange)
 
         # Analysis Search
         # self.Analysis_Search_wrap
@@ -104,6 +106,7 @@ class Window(QDialog, ui.Ui_Dialog):
 
         self.Analysis_Search_show_download.clicked.connect(self.Analysis_Search_show_download_onchange)
         self.Analysis_Search_dataset_download.clicked.connect(self.Analysis_Search_dataset_download_onchange)
+
 
     def status_clear_onchange(self):
         self.status_note.setText("")
@@ -199,7 +202,7 @@ class Window(QDialog, ui.Ui_Dialog):
             self.con = sqlite3.connect('database.db')
             self.cursorObj = self.con.cursor()
             # maybe use 0/1
-            want_receipt = "Yes" if self.ADD_offering_receipt.isChecked() else "No"
+            want_receipt = "No" if self.ADD_offering_receipt.isChecked() else "Yes"
             try:
                 cursor = self.cursorObj.execute("insert into offering(offeringID ,name, date, category, amount, note, receipt, payment_type) VALUES (?,?,?,?,?,?,?,?)",\
                                                 (str(self.ADD_offering_offeringID), str(self.ADD_offering_name), datetime.strptime(self.ADD_offering_date.date().toString("yyyy-MM-dd"), '%Y-%m-%d').date(),str(self.ADD_offering_category.currentText()), str(self.ADD_offering_amount.text()),str(self.ADD_offering_note.toPlainText()), want_receipt, str(self.ADD_offering_paytype.currentText())))
@@ -227,7 +230,7 @@ class Window(QDialog, ui.Ui_Dialog):
         self.ADD_offering_amount.setText("")
         self.ADD_offering_paytype.setCurrentIndex(0)
         self.ADD_offering_note.setText("")
-        self.ADD_offering_category.setCurrentIndex(0)
+        # self.ADD_offering_category.setCurrentIndex(0)
         self.ADD_offering_receipt.setChecked(False)
 
     '''
@@ -420,6 +423,7 @@ class Window(QDialog, ui.Ui_Dialog):
                 query = f"SELECT `offeringID`, {sumAmount} FROM offering WHERE (category = '{str(category)}') GROUP BY `offeringID`"
                 cursor = self.sql_operation(query)
                 sum_up = 0
+                # id_show_list = []
                 ID_show.setText("")
                 amount_show.setText("")
 
@@ -429,6 +433,7 @@ class Window(QDialog, ui.Ui_Dialog):
                         sum_up += int(row[1])
 
                 amount_show.append(f"{sum_up}")
+                # ID_show.append(f"{id_show_list}")
                 total_sum += sum_up
 
             self.WeeklyReport_total.setText(f"{total_sum}")
@@ -461,16 +466,19 @@ class Window(QDialog, ui.Ui_Dialog):
         self.Analysis_name, self.Analysis_offeringID = curr[1], curr[3]
 
     def Analysis_Search_dataset_download_onchange(self):
-        self.con = sqlite3.connect('database.db')
-        self.cursorObj = self.con.cursor()
-        cursor = self.cursorObj.execute("SELECT name FROM sqlite_master WHERE type ='table' AND name NOT LIKE 'sqlite_%'")
 
-        filename = f"dataset_to_excel_{datetime.today().date()}.xlsx"
-        writer= pd.ExcelWriter(filename, engine='xlsxwriter')
-        for table_name in cursor:
-            df = pd.read_sql(f"SELECT * FROM {table_name[0]}", self.con)
-            df.to_excel(writer, sheet_name=f"{table_name[0]}", index=False)
-        writer.close()
+        try:
+            self.con = sqlite3.connect('database.db')
+            self.cursorObj = self.con.cursor()
+            cursor = self.cursorObj.execute("SELECT name FROM sqlite_master WHERE type ='table' AND name NOT LIKE 'sqlite_%'")
+            filename = f"dataset_to_excel_{datetime.today().date()}.xlsx"
+            writer= pd.ExcelWriter(filename, engine='xlsxwriter')
+            for table_name in cursor:
+                df = pd.read_sql(f"SELECT * FROM {table_name[0]}", self.con)
+                df.to_excel(writer, sheet_name=f"{table_name[0]}", index=False)
+            writer.close()
+        except:
+            pass
 
     def Analysis_Search_show_download_onchange(self):
         try:
