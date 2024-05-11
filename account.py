@@ -328,14 +328,22 @@ class Window(QDialog, ui.Ui_Dialog):
 
             sumAmount = f"SUM(CASE WHEN `date` BETWEEN  '{datetime.strptime(str(date_from), '%Y-%m-%d').date()}' and '{datetime.strptime(str(date_end), '%Y-%m-%d').date()}' THEN amount ELSE 0 END) AS 'TOTAL'"
             
+            if date_from == date_end:
+                sum_up = f"SELECT `name`, {sumAmount}, `category` FROM offering GROUP BY `offeringID`"
+                cursor = self.sql_operation(sum_up)
+                self.Analysis_Search_show.append(f"從 {date_from} 到 {date_end}, 所有人當日奉獻收據")
+                for row in cursor:
+                    self.Analysis_Search_show.append(f"{row[0]}, {row[1]}, {row[2]} .等, {date_end}")
+
             # case all people
-            if ("category" not in sql) and ("offeringID" not in sql):
+            elif ("category" not in sql) and ("offeringID" not in sql):
+
                 sum_up = f"SELECT `name`, {sumAmount} FROM offering GROUP BY `offeringID`"
                 cursor = self.sql_operation(sum_up)
                 self.Analysis_Search_show.append(f"從 {date_from} 到 {date_end}, 所有人奉獻收據")
                 for row in cursor:
                     self.Analysis_Search_show.append(f"{row[0]}, {row[1]}, 月定(什一)奉獻收入. 等, 自{date_from} 至 {date_end}")
-            
+                
             # case one person
             elif "category" not in sql:
                 sum_up = f"SELECT `name`, {sumAmount} FROM offering WHERE offeringID = '{str(person)}'"
@@ -423,17 +431,18 @@ class Window(QDialog, ui.Ui_Dialog):
                 query = f"SELECT `offeringID`, {sumAmount} FROM offering WHERE (category = '{str(category)}') GROUP BY `offeringID`"
                 cursor = self.sql_operation(query)
                 sum_up = 0
-                # id_show_list = []
+                id_show_str = ""
                 ID_show.setText("")
                 amount_show.setText("")
 
                 for row in cursor:
                     if int(row[1]) > 0:
-                        ID_show.append(f"{row[0]}")
+                        # ID_show.append(f"{row[0]}")
+                        id_show_str += f"{row[0]},"
                         sum_up += int(row[1])
 
                 amount_show.append(f"{sum_up}")
-                # ID_show.append(f"{id_show_list}")
+                ID_show.append(f"{id_show_str[:-1]}")
                 total_sum += sum_up
 
             self.WeeklyReport_total.setText(f"{total_sum}")
