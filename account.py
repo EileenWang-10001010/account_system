@@ -1,16 +1,16 @@
+import os
 from PyQt5 import QtWidgets, QtCore, QtGui 
-from PyQt5.QtGui import QImage,QPixmap
+# from PyQt5.QtGui import QImage,QPixmap
 from PyQt5.QtWidgets import (QDialog, QApplication, QTableWidgetItem, QMainWindow, QMessageBox, )
+# from PyQt5.QtPrintSupport import QPrinter
+# from PyQt5.QtGui import QPainter, QPdfWriter, QPagedPaintDevice
 import sqlite3
 import numpy as np
 import logging
-import time
 from datetime import datetime
 import pandas as pd
-# import matplotlib.pyplot as plt
-# import matplotlib.dates 
-import math
 import dialog_ui as ui
+import cn2an
 
         # self.buttongroup = QtWidgets.QButtonGroup(self)
         # self.buttongroup.addButton(self.Search_offering_data_button,1)
@@ -28,25 +28,15 @@ class Window(QDialog, ui.Ui_Dialog):
         self.cursorObj.execute('create table if not exists offering(id INTEGER PRIMARY KEY, offeringID, name, date, category, amount, note, receipt, payment_type) ')        
         self.con.commit() 
         
-        # cursor = self.cursorObj.execute("SELECT * from offering").fetchall()
-        # print(cursor)
-        # cursor = self.cursorObj.execute("SELECT * from user").fetchall()
-        # print(cursor)
-        
         # status clear
         self.status_clear.clicked.connect(self.status_clear_onchange)
 
         # ADD user
-        # self.ADD_user_wrap
         self.ADD_user_name.textChanged.connect(self.ADD_user_name_onchange)
-        # self.ADD_user_ID
         self.ADD_user_offeringID.textChanged.connect(self.ADD_user_offeringID_onchange)
-        # self.ADD_user_phone
-        # self.ADD_user_address
         self.ADD_user_pushButton.clicked.connect(self.ADD_user_pushButton_onchange)
 
         # ADD offering
-        # self.ADD_offering_wrap
         self.ADD_offering_offeringID = ""
         self.ADD_offering_name = ""
         self.ADD_offering_person.textChanged.connect(self.ADD_offering_person_onchange)
@@ -84,7 +74,6 @@ class Window(QDialog, ui.Ui_Dialog):
         self.Search_date_all.setChecked(False)
 
         # Weekly report 
-        # self.WeeklyReport_wrap
         self.WeeklyReport_date_from.setDate(QtCore.QDate().currentDate())
         self.WeeklyReport_date_end.setDate(QtCore.QDate().currentDate())
         self.WeeklyReport_date_from.dateChanged.connect(self.WeeklyReport_date_onchange)
@@ -92,7 +81,6 @@ class Window(QDialog, ui.Ui_Dialog):
         self.WeeklyReport_button.clicked.connect(self.WeeklyReport_date_onchange)
 
         # Analysis Search
-        # self.Analysis_Search_wrap
         self.Analysis_name, self.Analysis_offeringID = "", ""
         self.Analysis_Search_date_from.setDate(QtCore.QDate().currentDate())
         self.Analysis_Search_date_end.setDate(QtCore.QDate().currentDate())
@@ -117,7 +105,6 @@ class Window(QDialog, ui.Ui_Dialog):
         cursor = self.cursorObj.execute(query).fetchall()
         self.con.commit()
         return cursor
-
 
     '''
     ADD USER
@@ -181,7 +168,6 @@ class Window(QDialog, ui.Ui_Dialog):
     ADD_offering_pushButton_onchange: add offering to database - offering, and clear the blanks
     '''
     def ADD_offering_person_onchange(self):
-        # self.update_database()
         self.con = sqlite3.connect('database.db')
         self.cursorObj = self.con.cursor()
         try:
@@ -226,7 +212,7 @@ class Window(QDialog, ui.Ui_Dialog):
         self.ADD_offering_offeringID = ""
         self.ADD_offering_name = ""
         self.ADD_offering_person.setText("")
-        self.ADD_offering_date.setDate(QtCore.QDate().currentDate())
+        # self.ADD_offering_date.setDate(QtCore.QDate().currentDate())
         self.ADD_offering_amount.setText("")
         self.ADD_offering_paytype.setCurrentIndex(0)
         self.ADD_offering_note.setText("")
@@ -284,8 +270,10 @@ class Window(QDialog, ui.Ui_Dialog):
             if search_all_date:
                 if date_from and date_end: filter.append(f"(date between '{datetime.strptime(str(date_from), '%Y-%m-%d').date()}' \
                                                             AND '{datetime.strptime(str(date_end), '%Y-%m-%d').date()}')")
-        if filter:
+        if  filter:
             sql += " WHERE" + " AND ".join(filter)
+        if field == "offering":
+            sql += " ORDER BY date DESC"
 
         return sql
     
@@ -323,47 +311,87 @@ class Window(QDialog, ui.Ui_Dialog):
                     item.setFlags(QtCore.Qt.ItemFlags(int("111111", 2))) # item.flags() ^ QtCore.Qt.ItemIsEditable
                     which_table.setItem(row_number, column_number, item)
         # tab 2
+
+            mapping = {
+                '零':'零',
+                '一':'壹',
+                '二':'貳',
+                '三':'參',
+                '四':'肆',
+                '五':'伍',
+                '六': '陸',
+                '七': '柒',
+                '八': '捌',
+                '九':'玖',
+                '十': '什', 
+                '百':'佰',
+                '千': '仟',
+                '万': '萬',
+                '亿': '億'
+            }
+
         if self.tabWidget.currentIndex():
             self.Analysis_Search_show.setText("")
 
             sumAmount = f"SUM(CASE WHEN `date` BETWEEN  '{datetime.strptime(str(date_from), '%Y-%m-%d').date()}' and '{datetime.strptime(str(date_end), '%Y-%m-%d').date()}' THEN amount ELSE 0 END) AS 'TOTAL'"
             
-            if date_from == date_end:
-                sum_up = f"SELECT `name`, {sumAmount}, `category` FROM offering GROUP BY `offeringID`"
-                cursor = self.sql_operation(sum_up)
-                self.Analysis_Search_show.append(f"從 {date_from} 到 {date_end}, 所有人當日奉獻收據")
-                for row in cursor:
-                    self.Analysis_Search_show.append(f"{row[0]}, {row[1]}, {row[2]} .等, {date_end}")
+            # if date_from == date_end:
+            #     sum_up = f"SELECT `name`, {sumAmount}, `category` FROM offering GROUP BY `offeringID`"
+            #     cursor = self.sql_operation(sum_up)
+            #     self.Analysis_Search_show.append(f"從 {date_from} 到 {date_end}, 所有人當日奉獻收據")
+            #     for row in cursor:
+            #         self.Analysis_Search_show.append(f"{row[0]}, {row[1]}, {row[2]} .等, {date_end}")
 
             # case all people
-            elif ("category" not in sql) and ("offeringID" not in sql):
+            if ("category" not in sql) and ("offeringID" not in sql):
 
-                sum_up = f"SELECT `name`, {sumAmount} FROM offering GROUP BY `offeringID`"
+                sum_up = f"SELECT `offeringID`, `name`, {sumAmount} FROM offering GROUP BY `offeringID`"
                 cursor = self.sql_operation(sum_up)
                 self.Analysis_Search_show.append(f"從 {date_from} 到 {date_end}, 所有人奉獻收據")
                 for row in cursor:
-                    self.Analysis_Search_show.append(f"{row[0]}, {row[1]}, 月定(什一)奉獻收入. 等, 自{date_from} 至 {date_end}")
+                    chinese_num = ""
+                    for num in cn2an.an2cn(str(row[2])):
+                        chinese_num += mapping[num]
+                    self.Analysis_Search_show.append(f"{row[0]}, {row[1]}, 新台幣 {chinese_num} 整 NT${row[2]}, 月定(什一)奉獻收入. 等, 自{date_from} 至 {date_end}")
                 
             # case one person
             elif "category" not in sql:
-                sum_up = f"SELECT `name`, {sumAmount} FROM offering WHERE offeringID = '{str(person)}'"
+
+                sum_up = f"SELECT `offeringID`, `name`, {sumAmount} FROM offering WHERE offeringID = '{str(person)}'"
                 cursor = self.sql_operation(sum_up)
+
+                multi_category = f"SELECT DISTINCT category FROM offering WHERE (offeringID = '{str(person)}' AND `date` BETWEEN  '{datetime.strptime(str(date_from), '%Y-%m-%d').date()}' and '{datetime.strptime(str(date_end), '%Y-%m-%d').date()}')" 
+                cursor_ = self.sql_operation(multi_category)
                 self.Analysis_Search_show.append(f"從 {date_from} 到 {date_end}, 個人奉獻收據")
+                categories = ",".join([row[0] for row in cursor_])
+
                 for row in cursor:
-                    self.Analysis_Search_show.append(f"{row[0]}, {row[1]}, 月定(什一)奉獻收入. 等, 自{date_from} 至 {date_end}")
+                    chinese_num = ""
+                    for num in cn2an.an2cn(str(row[2])):
+                        chinese_num += mapping[num]
+                    if date_from == date_end and int(row[2])>0:
+                        self.Analysis_Search_show.append(f"{row[0]}, {row[1]}, 新台幣 {chinese_num} 整 NT${row[2]}, {categories}, 自{date_from} 至 {date_end}")
+                    else:
+                        self.Analysis_Search_show.append(f"{row[0]}, {row[1]}, 新台幣 {chinese_num} 整 NT${row[2]}, '月定(什一)奉獻收入. 等', 自{date_from} 至 {date_end}")                    
             # case category
             elif "offeringID" not in sql:
                 sum_up = f"SELECT `category`, {sumAmount} FROM offering WHERE (category LIKE '%{str(offering_category)}%' OR note LIKE '%{str(offering_category)}%')"
                 cursor = self.sql_operation(sum_up)
                 self.Analysis_Search_show.append(f"從 {date_from} 到 {date_end}, 項目奉獻收據")
                 for row in cursor:
-                    self.Analysis_Search_show.append(f"{row[0]}, {row[1]}元, 自{date_from} 至 {date_end}")
+                    chinese_num = ""
+                    for num in cn2an.an2cn(str(row[1])):
+                        chinese_num += mapping[num]
+                    self.Analysis_Search_show.append(f"{row[0]}, 新台幣 {chinese_num} 整 NT${row[1]}, 自{date_from} 至 {date_end}")
             else:
-                sum_up = f"SELECT `name`, `category`, {sumAmount} FROM offering WHERE (category LIKE '%{str(offering_category)}%' OR note LIKE '%{str(offering_category)}%') AND (offeringID = '{str(person)}')"
+                sum_up = f"SELECT `offeringID`, `name`, `category`, {sumAmount} FROM offering WHERE (category LIKE '%{str(offering_category)}%' OR note LIKE '%{str(offering_category)}%') AND (offeringID = '{str(person)}')"
                 cursor = self.sql_operation(sum_up)
                 self.Analysis_Search_show.append(f"從 {date_from} 到 {date_end}, 個人項目奉獻收據")
                 for row in cursor:
-                    self.Analysis_Search_show.append(f"{row[0]}, {row[1]}, {row[2]}, 自{date_from} 至 {date_end}")
+                    chinese_num = ""
+                    for num in cn2an.an2cn(str(row[3])):
+                        chinese_num += mapping[num]
+                    self.Analysis_Search_show.append(f"{row[0]}, {row[1]}, {row[2]}, 新台幣 {chinese_num} 整 NT${row[3]}, 自{date_from} 至 {date_end}")
 
 
     
@@ -475,12 +503,18 @@ class Window(QDialog, ui.Ui_Dialog):
         self.Analysis_name, self.Analysis_offeringID = curr[1], curr[3]
 
     def Analysis_Search_dataset_download_onchange(self):
-
+        
         try:
             self.con = sqlite3.connect('database.db')
             self.cursorObj = self.con.cursor()
             cursor = self.cursorObj.execute("SELECT name FROM sqlite_master WHERE type ='table' AND name NOT LIKE 'sqlite_%'")
             filename = f"dataset_to_excel_{datetime.today().date()}.xlsx"
+            
+            counter = 0
+            while filename in os.listdir(os.getcwd()):
+                counter+=1
+                filename = f"dataset_to_excel_{datetime.today().date()}({counter}).xlsx"
+
             writer= pd.ExcelWriter(filename, engine='xlsxwriter')
             for table_name in cursor:
                 df = pd.read_sql(f"SELECT * FROM {table_name[0]}", self.con)
@@ -494,28 +528,32 @@ class Window(QDialog, ui.Ui_Dialog):
             if self.Analysis_Search_show.toPlainText():
                 lst = np.char.split(self.Analysis_Search_show.toPlainText(), '\n').tolist()
                 sheetname = f"{lst[0].split(',')[1]}"
-                data = [np.char.split(item, ',').tolist() for item in lst]
-                df = pd.DataFrame(data)
-                filename = f"browser_to_excel_{datetime.today().date()}.xlsx"
+                data = np.array([np.char.split(item, ',').tolist() for item in lst[1:]])
+                row, col = data.shape
+                df = pd.DataFrame()
+                
+                df.insert(0, 0, [str(datetime.today().timestamp()).split(".")[0]+str(data[i,0]) for i in range(row)]) # "receipt_number",
+                df.insert(1, 1, [str(datetime.today().date()) for _ in range(row)]) # "print_date"
+                df = pd.concat([df, pd.DataFrame(data[:, 1:])], axis=1, ignore_index=True)
+                
+                filename = f"browser_to_excel.xlsx"
+
+                counter = 0
+                while filename in os.listdir(os.getcwd()):
+                    counter+=1
+                    filename = f"browser_to_excel({counter}).xlsx"
+
                 df.to_excel(filename, sheet_name=sheetname, index=False)
+
         except:
             pass
 
 if __name__ == '__main__':
-    # app = QApplication([])
-    # #apply_stylesheet(app, theme='dark_blue.xml')
-    # window = Window()
-    # window.show()
-    # app.exec()
 
     import sys
     app = QApplication(sys.argv)
     MainWindow = QMainWindow()
     window = Window()
-
-    # paths = ['database.db']
-    # fs_watcher = QtCore.QFileSystemWatcher(paths)
-    # fs_watcher.fileChanged.connect(window.file_changed)
 
     window.show()
     sys.exit(app.exec_())
