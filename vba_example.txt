@@ -1,0 +1,11 @@
+Replace text with matching Mail Merge Field in docx
+https://stackoverflow.com/questions/50122503/replace-text-with-matching-mail-merge-field
+
+Dim oRng As Range
+Set oRng = ActiveDocument.Range
+With oRng.Find
+    Do While .Execute(FindText:="(Player 1)")
+        oRng.Fields.Add oRng, wdFieldMergeField, "Player_1", False
+        oRng.Collapse wdCollapseEnd
+    Loop
+End With
